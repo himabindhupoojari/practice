@@ -1,0 +1,51 @@
+.scheduler {
+  width: 98%;
+  margin: 20px auto;
+  border: 1px solid;
+  .calender_view {
+    display: flex;
+    justify-content: space-between;
+    &__calender {
+      width: 19%;
+      border: 1px solid;
+    }
+    .schedule_info_container {
+      width: 80%;
+      overflow: hidden;
+      .schedule_table_continer {
+        overflow: auto;
+        table {
+          width: 2500px;
+        }
+        tr > th {
+          border: 1px solid;
+          width: 450px;
+          text-align: center;
+        //   padding:30px 0px;
+        height: 50px;
+        }
+        tr > td {
+          border: 1px solid;
+          width: 450px;
+          height: 50px;
+          
+        //   padding:30px 0px;
+        // height: 90px;
+        }
+        tr th:first-child{
+            width: 100px;
+            text-align: left;
+        }
+         tr td:first-child{
+            width: 100px;
+            text-align: center;
+        }
+        td div p{
+          border: 1px solid blue;
+          margin: 0;
+          padding: 0;
+        }
+      }   
+    }
+  }
+}

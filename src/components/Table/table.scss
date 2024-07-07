@@ -1,0 +1,29 @@
+.table_Container {
+  width: 90%;
+  overflow: auto;
+  margin: 20px auto;
+  table {
+    width: 100%;
+    tr,
+    td,
+    th {
+      padding: 15px;
+    }
+    th,
+    td {
+      word-wrap: break-word;
+      &:first-child{
+        padding-left: 30px;
+      }
+    }
+    tr {
+      border: 1px solid;      
+    }
+    td {
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
