@@ -111,6 +111,7 @@ export const scheduleTaskData = [
     to_time:"2:00",
     text: "task pprogressed",    
     color:"blue",
+    date:"08-07-2024",
   },
   {
     id: 2,
@@ -119,6 +120,7 @@ export const scheduleTaskData = [
     to_time:"3:00",
     text: "task completed",    
     color:"green",
+    date:"08-07-2024",
   },
   {
     id: 3,
@@ -127,6 +129,7 @@ export const scheduleTaskData = [
     to_time:"3:30",
     text: "task on hold",    
     color:"red",
+    date:"08-07-2024",
   },
   {
     id: 4,
@@ -135,6 +138,16 @@ export const scheduleTaskData = [
     to_time:"4:30",
     text: "task assigned",    
     color:"yellow",
+    date:"08-07-2024",
+  },
+  {
+    id: 4,
+    month: "Feb",
+    from_time: "3:00",
+    to_time:"3:45",
+    text: "task assigned",    
+    color:"yellow",
+    date:"08-07-2024",
   },
 ];
 
