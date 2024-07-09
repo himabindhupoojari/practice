@@ -12,51 +12,57 @@
     }
     .schedule_info_container {
       border: 1px solid #717171;
-      border-radius: 14px;    
+      border-radius: 14px;
       width: 80%;
       overflow: hidden;
       .schedule_table_continer {
         border-radius: 14px;
+        height: 90vh;
         overflow: auto;
         table {
-          width: 2500px;
-          // border-radius: 14px;
+          width: 1168px;
         }
         tr > th {
           border: 1px solid #717171;
-          width: 450px;
+          width: 198px;
           text-align: center;
           padding: 0;
-          margin: 0;    
-        height: 70px;
-        color: #fff;
-        font-weight: 500;
-        background-color: #1F1F1F;
-        }
-        tr > td {
-          border: 1px solid #717171;
-          width: 450px;
-          height: 150px;
-          padding: 0;
           margin: 0;
-          position: relative; 
-          color: #fff;    
-          p{
-            z-index: 5;
-            span{
-              display: block;
+          height: 70px;
+          color: #fff;
+          font-weight: 500;
+          background-color: #1f1f1f;
+          position: sticky;
+          top: 0;
+          z-index: 5;
+        }
+        tbody {
+          tr > td {
+            border: 1px solid #717171;
+            width: 198px;
+            height: 100px;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            color: #fff;
+            cursor: pointer;
+            p {
+              z-index: 3;
+              span {
+                display: block;
+              }
             }
-          }     
+          }
         }
-        tr th:first-child{
-            width: 100px;
-            text-align: left;
+        tr th:first-child {
+          width: 100px;
+          text-align: left;
         }
-         tr td:first-child{
-            width: 100px;
-            text-align: center;
-        }        
-      }   
+        tr td:first-child {
+          width: 100px;
+          text-align: center;
+        }
+      }
     }
   }
 }

@@ -69,20 +69,15 @@ export const ScheduleListColumns: Coltype[] = [
   },
 ];
 
-export const scheduleMonthArray = [
-  { id: 0, value: "Jan", month: "January" },
-  { id: 1, value: "Feb", month: "February" },
-  { id: 2, value: "Mar", month: "March" },
-  { id: 3, value: "Apr", month: "April" },
-  { id: 4, value: "May", month: "May" },
-  { id: 5, value: "Jun", month: "June" },
-  { id: 6, value: "Jul", month: "July" },
-  { id: 7, value: "Aug", month: "August" },
-  { id: 8, value: "Sep", month: "September" },
-  { id: 9, value: "Oct", month: "October" },
-  { id: 10, value: "Nov", month: "November" },
-  { id: 11, value: "Dec", month: "December" },
-];
+export const scheduleWeekArr = [
+  { id: 0, value: "Mon", week: "Monday" },
+  { id: 0, value: "Tue", week: "Tuesday" },
+  { id: 0, value: "Wed", week: "Wednesday" },
+  { id: 0, value: "Thu", week: "Thursday" },
+  { id: 0, value: "Fri", week: "Friday" },
+  { id: 0, value: "Sat", week: "Saturday" },
+  // { id: 0, value: "Sun", month: "Sunday" },
+]
 
 export const scheduleTimeArrayMinutes = Array.from({ length: 60 }, (v, i) => ({  
   min: `${i}`,
@@ -97,58 +92,85 @@ export const scheduleTimeArray = Array.from({ length: 24 }, (v, i) => ({
 export const scheduleTaskData = [
   {
     id: 0,
-    month: "Jan",
-    from_time: "1:00",
+    week: "Mon",
+    from_time: "1:03",
     to_time:"1:30",
     text: "task assigned",    
     color:"yellow",
-    date:"08-07-2024",
+    date:"2024-07-07",
   },
   {
     id: 1,
-    month: "Feb",
-    from_time: "1:30",
-    to_time:"2:00",
+    week: "Tue",
+    from_time: "3:30",
+    to_time:"4:00",
     text: "task pprogressed",    
     color:"blue",
-    date:"08-07-2024",
+    date:"2024-07-08",
   },
   {
     id: 2,
-    month: "Mar",
+    week: "Wed",
     from_time: "2:00",
-    to_time:"3:00",
+    to_time:"4:00",
     text: "task completed",    
     color:"green",
-    date:"08-07-2024",
+    date:"2024-07-10",
   },
   {
     id: 3,
-    month: "Apr",
+    week: "Thu",
     from_time: "2:30",
     to_time:"3:30",
-    text: "task on hold",    
+    text: "on hold",    
     color:"red",
-    date:"08-07-2024",
+    date:"2024-07-14",
   },
   {
     id: 4,
-    month: "May",
+    week: "Fri",
     from_time: "3:05",
     to_time:"4:30",
     text: "task assigned",    
     color:"yellow",
-    date:"08-07-2024",
+    date:"2024-07-19",
   },
   {
-    id: 4,
-    month: "Feb",
+    id: 5,
+    week: "Sat",
     from_time: "3:00",
     to_time:"3:45",
     text: "task assigned",    
     color:"yellow",
-    date:"08-07-2024",
+    date:"2024-06-30",
   },
 ];
 
 
+export let currentMonday = getCurrentMonday();
+
+function getCurrentMonday() {
+  const today = new Date();
+  const day = today.getDay();
+  const mondayOffset = (day + 6) % 7;
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - mondayOffset);
+  monday.setHours(0, 0, 0, 0);
+  return monday;
+}
+
+export const getWeekdays =(monday: any)=> {
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const weekDates = [];
+
+  for (let i = 0; i < 6; i++) {
+    const current = new Date(monday);
+    current.setDate(monday.getDate() + i);
+    weekDates.push({
+      dayName: daysOfWeek[current.getDay()],
+      date: current.toISOString().split('T')[0] // Format: YYYY-MM-DD
+    });
+  }
+
+  return weekDates;
+}
