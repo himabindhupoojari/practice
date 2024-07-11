@@ -14,8 +14,6 @@ import FormPractice from "./components/Input/FormPractice";
 // import Table from "./components/Table/Table";
 import TableComponent from "./components/Table/TableComponent";
 import Scheduler from "./components/Scheduler/Scheduler";
-import SchedularlistView from "./components/Scheduler/SchedularlistView";
-import SchedularCalenderView from "./components/Scheduler/SchedularCalenderView";
 
 function App() {
   return (

@@ -1,22 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   currentMonday as initialCurrentMonday,
-  getWeekdays,  
+  currentDay as intitailCurrentDay,
+  getWeekdays,
   scheduleTaskData,
   scheduleTimeArray,
-  scheduleWeekArr,
 } from "./SchedulerData";
 import prev_arrow from "../../assets/images/previous_arrow.png";
 import next_arrow from "../../assets/images/next_arrow.png";
+import { convertDate } from "../../utils/dateUtils";
 
 function SchedularCalenderView() {
-  
+  let option = "da";
+
   const [currentMonday, setCurrentMonday] = useState(initialCurrentMonday);
-  const [weekDates, setWeekDates] = useState(getWeekdays(initialCurrentMonday));
+  const [getcurrentDay, setCurrentDay] = useState(intitailCurrentDay.toDayDate);
+  const [weekDates, setWeekDates] = useState(
+    getWeekdays(
+      option === "day" ? intitailCurrentDay.toDayDate : initialCurrentMonday,
+      option
+    )
+  );
 
   useEffect(() => {
-    setWeekDates(getWeekdays(currentMonday));
-  }, [currentMonday]);
+    setWeekDates(
+      getWeekdays(option === "day" ? getcurrentDay : currentMonday, option)
+    );
+  }, [currentMonday, getcurrentDay]);
 
   const openPopup = (date: string, time: string) => {
     const task = scheduleTaskData.find(
@@ -34,23 +44,39 @@ function SchedularCalenderView() {
   };
 
   const previous = () => {
-    const newMonday = new Date(currentMonday);
-    newMonday.setDate(currentMonday.getDate() - 7);
-    setCurrentMonday(newMonday);
+    if (option !== "day") {
+      const newMonday = new Date(currentMonday);
+      newMonday.setDate(currentMonday.getDate() - 7);
+      setCurrentMonday(newMonday);
+    } else {
+      const newDay = new Date(getcurrentDay);
+      newDay.setDate(getcurrentDay.getDate() - 1);
+      setCurrentDay(newDay);
+    }
   };
 
   const next = () => {
-    const newMonday = new Date(currentMonday);
-    newMonday.setDate(currentMonday.getDate() + 7);
-    setCurrentMonday(newMonday);
+    if (option !== "day") {
+      const newMonday = new Date(currentMonday);
+      newMonday.setDate(currentMonday.getDate() + 7);
+      setCurrentMonday(newMonday);
+    } else {
+      const newDay = new Date(getcurrentDay);
+      newDay.setDate(getcurrentDay.getDate() + 1);
+      setCurrentDay(newDay);
+    }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = convertDate(e.target.value);
+    setCurrentDay(date);
+  };
 
   return (
     <div className="calender_view">
       <div className="calender_view__calender">
         <div>
-          <input type="date" />
+          <input type="date" onChange={handleChange} />
         </div>
       </div>
 
@@ -60,19 +86,18 @@ function SchedularCalenderView() {
             <thead>
               <tr className="schedular_months_row">
                 <th className="schedule_months">
-                  <span onClick={previous} style={{ marginLeft: 20, borderRight:"1px solid #717171", height:'100%', cursor:'pointer' }}>
+                  <span onClick={previous}>
                     <img src={prev_arrow} />
                   </span>
-                  <span onClick={next} style={{ marginLeft: 0, cursor:'pointer' }}>
-                  <img src={next_arrow} />
+                  <span onClick={next}>
+                    <img src={next_arrow} />
                   </span>
                 </th>
                 {weekDates.map((week) => {
                   return (
                     <th className="schedule_months" key={week.dayName}>
-                      {week.dayName}
-                      <br />
-                      {week.date}
+                      <p>{week.dayName}</p>
+                      <p>{week.date.split("-")[2]}</p>
                     </th>
                   );
                 })}
@@ -88,7 +113,6 @@ function SchedularCalenderView() {
                         <td
                           key={week.dayName}
                           onClick={() => openPopup(week.dayName, timeval.time)}
-                          // style={{position:'fixed'}}
                         >
                           {scheduleTaskData.map((item) => {
                             let date = week.date;
@@ -109,7 +133,7 @@ function SchedularCalenderView() {
                             ) {
                               // 9:00 - 9:30
                               height = Number(apiToTimeEnd) * 1.6;
-                              // console.log(height);
+                              // .log(height);
                             }
 
                             // 9 t0 10 => different start time value and end time value
@@ -128,7 +152,7 @@ function SchedularCalenderView() {
                                     Number(apiFromTimeEnd) * 1.6 +
                                     Number(apiToTimeEnd) * 1.6
                                 );
-                                // console.log(height, '1');
+                                // .log(height, '1');
                               }
                               if (
                                 Number(apiFromTimeEnd) === Number(apiToTimeEnd)
@@ -138,7 +162,7 @@ function SchedularCalenderView() {
                                     Number(apiFromTimeStart)) *
                                     totalColumnHeight
                                 );
-                                // console.log(height, '2');
+                                // .log(height, '2');
                               }
                             }
 
@@ -147,28 +171,28 @@ function SchedularCalenderView() {
                               time === apiFromTimeStart
                             ) {
                               return (
-                                <p
+                                <div
                                   key={item.id} // Ensure unique key for each item
                                   style={{
                                     borderLeft: `5px solid ${item.color}`,
-                                    position: "absolute",
                                     top: `${top}px`,
-                                    right: 0,
-                                    left: 0,
                                     height: `${height}px`,
-                                    paddingLeft: 7,
-                                    paddingTop:0,
-                                    borderRadius: 7,
-                                    backgroundColor: "#262626",
-                                    cursor: "pointer",
                                   }}
                                   onClick={(event) => {
                                     editPopUp(item, event);
                                   }}
+                                  className="coldata"
                                 >
-                                  <span>{item.text}</span>
-                                  <span>{item.date}</span>
-                                </p>
+                                  <p>
+                                    <span>{item.text}</span>
+                                    <span className="subtext">{item.date}</span>
+
+                                    <span className="colpopup">
+                                      {item.text}{" "}
+                                      {`${item.from_time} to ${item.to_time}`}
+                                    </span>
+                                  </p>
+                                </div>
                               );
                             }
                             return null; // Return null if conditions don't match
