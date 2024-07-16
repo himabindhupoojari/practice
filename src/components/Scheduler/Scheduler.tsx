@@ -18,7 +18,7 @@ function Scheduler() {
         Calender View
       </button>      
 
-      {storeTab === "1" ? <SchedularCalenderView /> : <SchedularlistView />}
+      {storeTab === "2" ? <SchedularCalenderView /> : <SchedularlistView />}
     </div>
   );
 }
