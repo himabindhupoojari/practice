@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap");
 
 .scheduler {
-  // background-color: #000;
+  background-color: #000;
   padding-bottom: 50px; // shouls be removed
   width: 98%;
   margin: 20px auto;
@@ -127,8 +127,8 @@
                   border: 1px solid #000;
                   padding: 5px;
                   position: absolute;
-                  right: -20px;
-                  bottom: -30px;
+                  right: 0px;
+                  bottom: -35px;
                   white-space: nowrap;
                   z-index: 2;
                 }
@@ -194,8 +194,8 @@
                   border: 1px solid #000;
                   padding: 5px;
                   position: absolute;
-                  right: -20px;
-                  bottom: -30px;
+                  right: 0px;
+                  bottom: -35px;
                   white-space: nowrap;
                   z-index: 9;
                 }
