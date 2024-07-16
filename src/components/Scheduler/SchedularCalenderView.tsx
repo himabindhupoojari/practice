@@ -95,7 +95,12 @@ function SchedularCalenderView() {
                 </th>
                 {weekDates.map((week) => {
                   return (
-                    <th className="schedule_months" key={week.dayName}>
+                    <th
+                      className={
+                        option === "day" ? "schedule_day" : "schedule_months"
+                      }
+                      key={week.dayName}
+                    >
                       <p>{week.dayName}</p>
                       <p>{week.date.split("-")[2]}</p>
                     </th>
@@ -177,21 +182,27 @@ function SchedularCalenderView() {
                                     borderLeft: `5px solid ${item.color}`,
                                     top: `${top}px`,
                                     height: `${height}px`,
+                                    padding:"7px"
                                   }}
                                   onClick={(event) => {
                                     editPopUp(item, event);
                                   }}
-                                  className="coldata"
+                                  className={
+                                    option === "day" ? "coldata_day" : "coldata"
+                                  }
                                 >
-                                  <p>
-                                    <span>{item.text}</span>
-                                    <span className="subtext">{item.date}</span>
-
-                                    <span className="colpopup">
+                                  <div className="aligndata">
+                                    <div>
+                                      <span>{item.text}</span>
+                                      <span className="subtext">
+                                        {item.date}
+                                      </span>
+                                    </div>
+                                    <div className="colpopup">
                                       {item.text}{" "}
                                       {`${item.from_time} to ${item.to_time}`}
-                                    </span>
-                                  </p>
+                                    </div>
+                                  </div>
                                 </div>
                               );
                             }
