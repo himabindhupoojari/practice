@@ -145,6 +145,15 @@ export const scheduleTaskData = [
     color: "yellow",
     date: "2024-06-30",
   },
+  {
+    id: 6,
+    week: "Sat",
+    from_time: "3:00",
+    to_time: "3:45",
+    text: "task completed",
+    color: "",
+    date: "2024-07-17",
+  },
 ];
 
 export let currentMonday = getCurrentMonday();

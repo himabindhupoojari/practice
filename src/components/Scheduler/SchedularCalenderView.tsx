@@ -4,7 +4,7 @@ import {
   currentDay as intitailCurrentDay,
   getWeekdays,
   scheduleTaskData,
-  scheduleTimeArray,
+  scheduleTimeArray,  
 } from "./SchedulerData";
 import prev_arrow from "../../assets/images/previous_arrow.png";
 import next_arrow from "../../assets/images/next_arrow.png";
@@ -72,6 +72,7 @@ function SchedularCalenderView() {
     setCurrentDay(date);
   };
 
+
   return (
     <div className="calender_view">
       <div className="calender_view__calender">
@@ -118,6 +119,9 @@ function SchedularCalenderView() {
                         <td
                           key={week.dayName}
                           onClick={() => openPopup(week.dayName, timeval.time)}
+                          className={`month_columns ${
+                            option === "day" && "week_columns"
+                          }`}
                         >
                           {scheduleTaskData.map((item) => {
                             let date = week.date;
@@ -179,22 +183,22 @@ function SchedularCalenderView() {
                                 <div
                                   key={item.id} // Ensure unique key for each item
                                   style={{
-                                    borderLeft: `5px solid ${item.color}`,
+                                    borderLeft: `5px solid ${item.color ? item.color : "transparent"}`,
                                     top: `${top}px`,
                                     height: `${height}px`,
-                                    padding:"7px"
+                                    padding: "7px",
                                   }}
                                   onClick={(event) => {
                                     editPopUp(item, event);
                                   }}
-                                  className={
-                                    option === "day" ? "coldata_day" : "coldata"
-                                  }
+                                  className={`coldata ${
+                                    option === "day" && "coldata_day"
+                                  }`}
                                 >
                                   <div className="aligndata">
                                     <div>
-                                      <span>{item.text}</span>
-                                      <span className="subtext">
+                                      <span className={item.color === "" ? 'task_completed' : ''}>{item.text}</span>
+                                      <span className={`subtext ${item.color === "" && 'subtext_task_completed'}`}>
                                         {item.date}
                                       </span>
                                     </div>
