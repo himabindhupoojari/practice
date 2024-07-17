@@ -1,6 +1,14 @@
-import { title } from "process";
-import { Coltype, RowType } from "../Table/TableInterfaces";
+// import { Coltype, RowType } from "../Table/TableInterfaces";
 
+export interface Coltype {  
+  [key: string]: string | boolean
+}
+
+export type CellValue = string | number | object ;
+
+export interface RowType {  
+  [key: string]: CellValue;
+}
 
 export const SchedulerListData: RowType[] = [
   {
@@ -69,16 +77,6 @@ export const ScheduleListColumns: Coltype[] = [
     minWidth: "50px",
   },
 ];
-
-// export const scheduleWeekArr = [
-//   { id: 0, value: "Mon", week: "Monday" },
-//   { id: 0, value: "Tue", week: "Tuesday" },
-//   { id: 0, value: "Wed", week: "Wednesday" },
-//   { id: 0, value: "Thu", week: "Thursday" },
-//   { id: 0, value: "Fri", week: "Friday" },
-//   { id: 0, value: "Sat", week: "Saturday" },
-//   // { id: 0, value: "Sun", month: "Sunday" },
-// ];
 
 export const scheduleTimeArrayMinutes = Array.from({ length: 60 }, (v, i) => ({
   min: `${i}`,
@@ -178,7 +176,7 @@ function getCurrentDay() {
   return { day: day, dayName: dayName, toDayDate: todayDate };
 }
 
-export const getWeekdays = (date: any, option: string) => {  
+export const getWeekdays = (date: any, option: string) => {
   const daysOfWeek = ["Sunday", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const weekDates = [];
 
@@ -192,7 +190,7 @@ export const getWeekdays = (date: any, option: string) => {
       });
     }
   } else {
-    const currentDay = new Date(date);         
+    const currentDay = new Date(date);
     weekDates.push({
       dayName: daysOfWeek[currentDay.getDay()],
       date: currentDay.toISOString().split("T")[0],

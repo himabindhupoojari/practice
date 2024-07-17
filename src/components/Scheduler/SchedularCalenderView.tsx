@@ -133,7 +133,7 @@ function SchedularCalenderView() {
 
                             let top = Number(apiFromTimeEnd) * 1.6;
                             let height = 0;
-                            let totalColumnHeight = 100;
+                            let totalColumnHeight = 100; // height of the column
 
                             //  9 to 9 => same start time value and end time value
                             if (
@@ -141,8 +141,7 @@ function SchedularCalenderView() {
                               Number(apiToTimeStart)
                             ) {
                               // 9:00 - 9:30
-                              height = Number(apiToTimeEnd) * 1.6;
-                              // .log(height);
+                              height = Number(apiToTimeEnd) * 1.6;                              
                             }
 
                             // 9 t0 10 => different start time value and end time value
@@ -160,8 +159,7 @@ function SchedularCalenderView() {
                                     totalColumnHeight -
                                     Number(apiFromTimeEnd) * 1.6 +
                                     Number(apiToTimeEnd) * 1.6
-                                );
-                                // .log(height, '1');
+                                );                                
                               }
                               if (
                                 Number(apiFromTimeEnd) === Number(apiToTimeEnd)
@@ -170,8 +168,7 @@ function SchedularCalenderView() {
                                   (Number(apiToTimeStart) -
                                     Number(apiFromTimeStart)) *
                                     totalColumnHeight
-                                );
-                                // .log(height, '2');
+                                );                                
                               }
                             }
 
@@ -181,7 +178,7 @@ function SchedularCalenderView() {
                             ) {
                               return (
                                 <div
-                                  key={item.id} // Ensure unique key for each item
+                                  key={item.id}
                                   style={{
                                     borderLeft: `5px solid ${item.color ? item.color : "transparent"}`,
                                     top: `${top}px`,
@@ -210,7 +207,7 @@ function SchedularCalenderView() {
                                 </div>
                               );
                             }
-                            return null; // Return null if conditions don't match
+                            return null; 
                           })}
                         </td>
                       );
