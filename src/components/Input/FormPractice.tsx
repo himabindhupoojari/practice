@@ -1,83 +1,39 @@
 import React, { useState } from "react";
 import Input from "./Input";
 import { onBlurvalidation } from "./Validation";
+import { FormField, form, subArr } from "./InputInterface";
 
-export interface FormField {
-  label: string;
-  name: string;
-  id: string;
-  type: string;
-  placeholder: string;
-  minLength: number;
-  maxLength: number;
-  required: boolean;
-  isAlphaNumeric: boolean,
-}
 
 function FormPractice() {
-  const form: FormField[] = [
-    {
-      label: "Name",
-      name: "name",
-      id: "name",
-      type: "text",
-      placeholder: "Enter Name",
-      minLength: 3,
-      maxLength: 10,
-      required: true,
-      isAlphaNumeric: false,
-    },
-    {
-      label: "Email",
-      name: "email",
-      id: "email",
-      type: "email",
-      placeholder: "Enter Email",
-      minLength: 0,
-      maxLength: 100,
-      required: true,
-      isAlphaNumeric: false,
-    },
-    {
-      label: "Roll No",
-      name: "roll_no",
-      id: "rollno",
-      type: "number",
-      placeholder: "Enter Roll No",
-      minLength: 5,
-      maxLength: 20,
-      required: true,
-      isAlphaNumeric: false,
-    },
-  ];
 
   const apidata = {
-    name: "hii",
-    email: "h@g.c",
+    name: "Bindu",
+    email: "bindu@gmail.com",
   };
 
   // State to hold onBlurvalidation messages for each field
   const [validationMsgs, setValidationMsgs] = useState<{
     [key: string]: string;
   }>({});
+// console.log(validationMsgs, 'validationMsgs');
 
   // State to hold post obj
   const [data, Setdata] = useState<{
     [key: string]: string | number;
   }>(apidata);
 
+  console.log(data, 'data');
+
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
     item: FormField,
     value: string | number | boolean
   ) => {
-    console.log(typeof value, "value");
-
     const validationMessage = onBlurvalidation(item, value);
     if (!validationMessage) {
       setValidationMsgs((prev) => ({
         ...prev,
-        [item.name]: "",
+        [item.name as string]: "",
       }));
     }
     Setdata((prev) => ({
@@ -91,12 +47,12 @@ function FormPractice() {
     if (validationMessage) {
       setValidationMsgs((prev) => ({
         ...prev,
-        [item.name]: validationMessage,
+        [item.name as string]: validationMessage,
       }));
     } else {
       setValidationMsgs((prev) => ({
         ...prev,
-        [item.name]: "",
+        [item.name as string]: "",
       }));
     }
   };
@@ -105,11 +61,11 @@ function FormPractice() {
     let count = 0;
     const hasErrors = Object.values(validationMsgs).some((msg) => msg !== "");
     form.map((item) => {
-      if (item.required && !data.hasOwnProperty(item.name)) {
+      if (item.required && !data.hasOwnProperty(item.name as string)) {
         count++;
         setValidationMsgs((prev) => ({
           ...prev,
-          [item.name]: `${item.label} is required.`,
+          [item.name as string]: `${item.label} is required.`,
         }));
       }
     });
@@ -129,30 +85,35 @@ function FormPractice() {
   };
 
   return (
-    <div>
+    <div className="form" >
       {form.map((item) => (
-        <div key={item.id}>            
+        <div key={item.id as string}>
+          <label>{item.label as string}</label>
           <Input
-            type={item.type}
-            name={item.name}
-            id={item.id}
+            type={item.type as string}
+            name={item.name as string}
+            id={item.id as string}
             // value={data.hasOwnProperty(item.name) ? data[item.name] : ""}
-            value={data[item.name] || ""}
-            placeholder={item.placeholder}
-            minLength={item.minLength}
-            maxLength={item.maxLength}
-            required={item.required}
-            handleChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            value={data[item.name as string] || ""}
+            placeholder={item.placeholder as string}
+            minLength={item.minLength as number}
+            maxLength={item.maxLength as number}
+            required={item.required as boolean}
+            handleChange={(event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
               handleChange(event, item, event.target.value)
             }
-            handleBlur={(event: React.FocusEvent<HTMLInputElement>) =>
+            handleBlur={(event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
               handleBlur(item, event.target.value)
             }
+            options={item.options as subArr[]}
           />
-          <p style={{ color: "red" }}>{validationMsgs[item.name]}</p>
+          <p style={{ color: "red" }}>{validationMsgs[item.name as string]}</p>
         </div>
       ))}
-      <button onClick={handleSubmit}>Submit</button>
+      <button type="button" onClick={handleSubmit}>
+        Submit
+      </button>
+      {/* <input type="submit"/> */}      
     </div>
   );
 }
