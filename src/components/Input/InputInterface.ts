@@ -1,3 +1,6 @@
+
+import React from 'react';
+
 export interface subArr {
   [key: string]: number | string | boolean;
 }
@@ -11,17 +14,19 @@ export interface FormField {
   // maxLength: number;
   // required: boolean;
   // isAlphaNumeric: boolean,
-  [key: string]: number | string | subArr[] | boolean;
+//   [key: string]: number | string | subArr[] | boolean;
+[key: string]: string | number | Array<string | number> | subArr[] | boolean;
 }
+
 
 export interface InputType {
   type: string;
   name: string;
   id: string;
-  value: string | number;
+  value: string | number | string[];
   placeholder: string;
-  maxLength?: number;
-  minLength?: number;
+  maxLength?: number | string;
+  minLength?: number | string;
   readOnly?: boolean;
   required?: boolean;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
@@ -136,4 +141,75 @@ export const form: FormField[] = [
     required: true,
     // isAlphaNumeric: false,
   },
+  {
+    label: "Date",
+    name: "date",
+    id: "date",
+    type: "date",
+    // placeholder: "mm/dd/yyyy",
+    minLength:"2024-01-01", maxLength:"2024-07-01",
+    required: true,
+    // isAlphaNumeric: false,
+  },
 ];
+
+
+// npm install jquery select2
+// npm install @types/jquery
+
+
+// export interface Select2Option {
+//     id: string;
+//     text: string;
+//     image: string;
+//   }
+  
+// export interface Select2Props {
+//     options: Select2Option[];
+//     onChange: (selectedValue: string) => void;
+//   }
+  
+
+// export const Select2 = () => {
+    
+//   }
+
+
+// const handleChange = (
+//     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+//     item: FormField,
+//     value: string | number | boolean
+//   ) => {
+//     const validationMessage = onBlurvalidation(item, value);
+//     if (!validationMessage) {
+//       setValidationMsgs((prev) => ({
+//         ...prev,
+//         [item.name as string]: "",
+//       }));
+//     }
+  
+//     setData((prev) => {
+//       const newValue = event.target.value;
+  
+//       if (item.type === "checkbox") {
+//         const currentValues = Array.isArray(prev[event.target.name])
+//           ? (prev[event.target.name] as Array<string | number>)
+//           : [];
+        
+//         const updatedValues = (event.target as HTMLInputElement).checked
+//           ? [...currentValues, newValue]
+//           : currentValues.filter((val: string | number) => val !== newValue);
+  
+//         return {
+//           ...prev,
+//           [event.target.name]: updatedValues,
+//         };
+//       } else {
+//         return {
+//           ...prev,
+//           [event.target.name]: newValue,
+//         };
+//       }
+//     });
+//   };
+  

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { InputType, subArr } from "./InputInterface";
 import showpassword from "../../assets/images/showpassword.png";
 import hidepassword from "../../assets/images/hidepassword.png";
+import 'select2/dist/css/select2.css';
+import 'select2';
+
 function Input(props: InputType) {
   const [hidePassword, setHidePassword] = useState(true);
   const showpasswordText = () => {
@@ -12,7 +15,7 @@ function Input(props: InputType) {
       {(props.type === "text" ||
         props.type === "password" ||
         props.type === "number" ||
-        props.type === "email") && (
+        props.type === "email" || props.type === "date") && (
         <>
           <input
             type={
@@ -27,10 +30,10 @@ function Input(props: InputType) {
             // value={props.type === "number" ? Number(props.value) : props.value}
             value={props.type === "number" && !props.value ? "" : props.value}
             placeholder={props.placeholder}
-            maxLength={props.type !== "number" ? props.maxLength : undefined}
-            max={props.type === "number" ? props.maxLength : undefined}
-            minLength={props.type !== "number" ? props.minLength : undefined}
-            min={props.type === "number" ? props.minLength : undefined}
+            maxLength={props.type !== "number" ? props.maxLength as number : undefined}
+            max={props.type === "number" ? props.maxLength as number : props.type === "date" ? props.maxLength as string : undefined}
+            minLength={props.type !== "number" ? props.minLength as number : undefined}
+            min={props.type === "number" ? props.minLength as number : props.type === "date" ? props.minLength as string : undefined}
             readOnly={props.readOnly}
             required={props.required}
             onChange={props.handleChange}
@@ -103,7 +106,7 @@ function Input(props: InputType) {
         })
         }
         {props.type === "textarea" &&
-        <textarea rows={7} placeholder={props.placeholder} onChange={props.handleChange}
+        <textarea rows={7} name="comments" placeholder={props.placeholder} onChange={props.handleChange}
         onBlur={props.handleBlur}></textarea>
         }
     </div>
