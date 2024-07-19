@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { InputType, subArr } from "./InputInterface";
 import showpassword from "../../assets/images/showpassword.png";
 import hidepassword from "../../assets/images/hidepassword.png";
-import 'select2/dist/css/select2.css';
-import 'select2';
 
 function Input(props: InputType) {
   const [hidePassword, setHidePassword] = useState(true);
