@@ -15,7 +15,7 @@ export interface FormField {
   // required: boolean;
   // isAlphaNumeric: boolean,
 //   [key: string]: number | string | subArr[] | boolean;
-[key: string]: string | number | Array<string | number> | subArr[] | boolean;
+[key: string]: string | number | Array<string | number> | subArr[] | boolean | RegExp;
 }
 
 
@@ -45,6 +45,7 @@ export const form: FormField[] = [
     maxLength: 10,
     required: true,
     isAlphaNumeric: false,
+    pattern: /^[A-Za-z]+$/i ,
   },
   {
     label: "Email",

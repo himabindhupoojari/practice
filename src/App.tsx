@@ -14,6 +14,7 @@ import FormPractice from "./components/Input/FormPractice";
 // import Table from "./components/Table/Table";
 import TableComponent from "./components/Table/TableComponent";
 import Scheduler from "./components/Scheduler/Scheduler";
+import ReactHookForm from "./components/Input/ReactHookForm";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Link to="form_practice">Form Practice</Link>
         <Link to="table">Table</Link>
         <Link to="scheduler">Scheduler</Link>
+        <Link to="rhf">RHF</Link>
       </div>
       <Routes>
         <Route path="/" element={<Component1 />} />
@@ -42,7 +44,8 @@ function App() {
         <Route path="weather" element={<WeatherDashboard />} />
         <Route path="form_practice" element={<FormPractice />} />
         <Route path="table" element={<TableComponent />} />
-        <Route path="scheduler" element={<Scheduler />} />        
+        <Route path="scheduler" element={<Scheduler />} />
+        <Route path="rhf" element={<ReactHookForm />} />        
       </Routes>
     </BrowserRouter>
   );
