@@ -1,0 +1,284 @@
+$color-background: rgb(9 9 9 / 100%);
+$color-list-view: rgb(30 30 30 / 100%);
+$color-list-view-clicked: rgb(45 45 45 / 100%);
+$color-primary: rgb(79 84 249 / 100%);
+$color-heading: rgb(255 255 255 / 100%);
+$color-text: rgb(202 202 202 / 100%);
+$color-text-two: rgb(142 142 142 / 100%);
+$color-red: rgb(255 74 74 / 100%);
+$color-yellow: rgb(238 157 0 / 100%);
+$color-green: rgb(15 193 0 / 100%);
+
+
+// @mixin dark-theme {
+//   background-color: #121212;
+//   color: #ffffff;
+
+//   .heading {
+//     color: #ffffff;
+//   }
+
+//   .para {
+//     color: #cccccc;
+//   }
+// }
+
+// Global functions
+// Mixin for setting width and height and borderRadius
+// @mixin square($widthSize: null, $heightSize: null, $radius: null) {
+//   @if $widthSize {
+//     width: $widthSize;
+//   }
+//   @if $heightSize {
+//     height: $heightSize;
+//   }
+//   @if $radius {
+//     border-radius: $radius;
+//   }
+// }
+
+// // Mixin for setting dimensions
+// @mixin dimensions(
+//   $minWidth: null,
+//   $minHeight: null,
+//   $maxWidth: null,
+//   $maxHeight: null
+// ) {
+//   @if $minWidth {
+//     min-width: $minWidth;
+//   }
+//   @if $minHeight {
+//     min-height: $minHeight;
+//   }
+//   @if $maxWidth {
+//     max-width: $maxWidth;
+//   }
+//   @if $maxHeight {
+//     max-height: $maxHeight;
+//   }
+// }
+// // Mixin for setting flexBox default styles
+// @mixin defaultFlex(
+//   $display,
+//   $direction: null,
+//   $items: null,
+//   $justify: null,
+//   $wrap: null,
+//   $gap: null,
+//   $self: null
+// ) {
+//   display: $display;
+//   @if $direction {
+//     flex-direction: $direction;
+//   }
+//   @if $items {
+//     align-items: $items;
+//   }
+//   @if $justify {
+//     justify-content: $justify;
+//   }
+//   @if $wrap {
+//     flex-wrap: $wrap;
+//   }
+//   @if $gap {
+//     column-gap: $gap;
+//   }
+//   @if $self {
+//     align-self: $self;
+//   }
+// }
+// // Mixin for setting margin
+// @mixin setMargin($top: 0, $right: 0, $bottom: 0, $left: 0) {
+//   margin: $top $right $bottom $left;
+// }
+// // Mixin for setting padding
+// @mixin setPadding($top: 0, $right: 0, $bottom: 0, $left: 0) {
+//   padding: $top $right $bottom $left;
+// }
+// // Mixin for setting default image
+// @mixin defaultImg($widthSize: 100%, $heightSize: 100%, $fill: fill) {
+//   width: $widthSize;
+//   max-height: $heightSize;
+//   object-fit: $fill;
+// }
+// // Mixin for setting default position
+// @mixin position-mixin(
+//   $position,
+//   $top: null,
+//   $right: null,
+//   $bottom: null,
+//   $left: null
+// ) {
+//   position: $position;
+//   @if $top {
+//     top: $top;
+//   }
+//   @if $right {
+//     right: $right;
+//   }
+//   @if $bottom {
+//     bottom: $bottom;
+//   }
+//   @if $left {
+//     left: $left;
+//   }
+// }
+// // Mixin for setting default color combination set
+// @mixin defaultColourSet($backgroundColor: null, $color: null) {
+//   @if $backgroundColor {
+//     background-color: $backgroundColor;
+//   }
+//   @if $color {
+//     color: $color;
+//   }
+// }
+// // common set for buttons
+// @mixin defaultBtn(
+//   $widthSize: null,
+//   $heightSize: null,
+//   $radius: null,
+//   $bgColor: null,
+//   $color: null,
+//   $padding: null,
+//   $margin: null,
+//   $display: null,
+//   $align: null,
+//   $justify: null
+// ) {
+//   @include square($widthSize, $heightSize, $radius);
+//   @include defaultColourSet($bgColor, $color);
+//   @include setPadding($padding, $padding, $padding, $padding);
+//   @include setMargin($margin, $margin, $margin, $margin);
+//   @include defaultFlex($display: null, $items: null, $justify: null);
+//   border: none;
+//   cursor: pointer;
+//   text-align: center;
+//   text-decoration: none;
+//   transition: background-color 0.3s ease, color 0.3s ease;
+//   &:hover {
+//   }
+//   &:disabled {
+//     cursor: not-allowed;
+//     opacity: 0.6;
+//   }
+// }
+// // Input component set
+// @mixin inputComponent(
+//   $width: null,
+//   $height: null,
+//   $padding: null,
+//   $border: null,
+//   $borderRadius: null,
+//   $backgroundColor: null,
+//   $color: null,
+//   $fontSize: null,
+//   $fontFamily: null,
+//   $placeholderColor: null,
+//   $focusOutline: null
+// ) {
+//   @include shape($widthSize, $heightSize, $radius);
+//   @include setMargin($top: 0, $right: 0, $bottom: 0, $left: 0);
+//   @include setPadding($top: 0, $right: 0, $bottom: 0, $left: 0);
+//   @include colorSet($backgroundColor, $color);
+//   border: $border;
+//   font-size: $fontSize;
+//   font-family: $fontFamily;
+//   &::placeholder {
+//     color: $placeholderColor;
+//   }
+//   &:focus {
+//     outline: $focusOutline;
+//   }
+// }
+// // Table component set
+// @mixin tableComponent(
+//   $borderCollapse: collapse,
+//   $width: 100%,
+//   $backgroundColor: #fff,
+//   $borderColor: #ccc,
+//   $borderWidth: 1px,
+//   $cellPadding: 8px,
+//   $cellSpacing: 0,
+//   $headerBackgroundColor: #f0f0f0,
+//   $headerColor: #333,
+//   $headerFontWeight: bold,
+//   $rowHoverBackground: #f9f9f9,
+//   $stripedRows: true
+// ) {
+//   width: $width;
+//   border-collapse: $borderCollapse;
+//   background-color: $backgroundColor;
+//   border-color: $borderColor;
+//   border-width: $borderWidth;
+//   border-spacing: $cellSpacing;
+//   th,
+//   td {
+//     padding: $cellPadding;
+//     border: $borderWidth solid $borderColor;
+//   }
+//   thead {
+//     background-color: $headerBackgroundColor;
+//     color: $headerColor;
+//     font-weight: $headerFontWeight;
+//   }
+//   tbody {
+//     tr {
+//       &:hover {
+//         background-color: $rowHoverBackground;
+//       }
+//       @if $stripedRows {
+//         &:nth-child(even) {
+//           background-color: lighten($rowHoverBackground, 3%);
+//         }
+//       }
+//     }
+//   }
+// }
+
+// @mixin btn(
+//   $width:null,
+//   $height:null,
+//   $padding:null,
+//   $color:null,  
+//   $border:null,
+//   $background-color:null,
+//   $radius:null,
+//   $hover-background-color:null,
+//   $hover-color:null,
+//   $hover-border:null,  
+// ) {
+//   @if $width {
+//     width: $width;
+//   }
+//   @if $height {
+//     height: $height;
+//   }
+//   @if $padding {
+//     padding: $padding;
+//   }
+//   @if $color {
+//     color: $color;
+//   }
+//   @if $border {
+//     border: $border;
+//   }
+//   @if background-color{
+//     background-color: $background-color;
+//   }
+//   @if $radius {
+//     border-radius: $radius;
+//   }
+//   transition: 1s ease-in;
+//   &:hover {
+//     @if $hover-background-color {
+//       background-color: $hover-background-color;
+//     }
+//     @if $hover-color {
+//       color: $hover-color;
+//     }
+//     @if $hover-border {
+//       border: $hover-border;
+//     }
+//     transition: 1s ease-out;
+//   }
+// }

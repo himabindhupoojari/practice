@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import "./App.css";
+// import "./App.css";
 import Component1 from "./components/Component1";
 import Component2 from "./components/Component2";
 import CreateContextApiReact from "./components/Create Context/CreateContextApiReact";
@@ -15,6 +15,7 @@ import FormPractice from "./components/Input/FormPractice";
 import TableComponent from "./components/Table/TableComponent";
 import Scheduler from "./components/Scheduler/Scheduler";
 import ReactHookForm from "./components/Input/ReactHookForm";
+import ThemeSwitcher from "./components/ThemeBuilder/ThemeSwitcher";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Link to="table">Table</Link>
         <Link to="scheduler">Scheduler</Link>
         <Link to="rhf">RHF</Link>
+        <Link to="ts">Theme</Link>
       </div>
       <Routes>
         <Route path="/" element={<Component1 />} />
@@ -45,7 +47,8 @@ function App() {
         <Route path="form_practice" element={<FormPractice />} />
         <Route path="table" element={<TableComponent />} />
         <Route path="scheduler" element={<Scheduler />} />
-        <Route path="rhf" element={<ReactHookForm />} />        
+        <Route path="rhf" element={<ReactHookForm />} />     
+        <Route path="ts" element={<ThemeSwitcher />} />        
       </Routes>
     </BrowserRouter>
   );

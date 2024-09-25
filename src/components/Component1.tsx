@@ -3,6 +3,8 @@ import Component3 from "./Component3";
 // import axios from "axios";
 // import UseCallBack from "./Create Context/useCallbackExample";
 import { useTheme } from "./Create Context/CreateContextFile";
+import Select from "./Select/Select";
+import ThemeSwitcher from "./ThemeBuilder/ThemeSwitcher";
 
 type UserContextType = string | undefined;
 
@@ -139,6 +141,7 @@ function Component1() {
       </UserContext.Provider>
       {/* <button onClick={addData}>Add Data</button> */}
       {/* <UseCallBack/> */}
+      <ThemeSwitcher />
     </div>
   );
 }

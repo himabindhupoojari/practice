@@ -1,0 +1,137 @@
+// // @import 'path/to/variables'; // Import your general variables
+
+// // Conditionally load themes
+// @import './dark.scss'; // default to dark
+
+// .light {
+//   @import './light.scss';
+// }
+
+// // body {
+// //   background-color: $color-background;
+// //   color: $color-text;
+// // }
+
+// h1, h2, h3 {
+//   color: $color-heading;
+// }
+
+// p{
+//     color:$color-para;
+// }
+
+// // More styles here
+
+// @import "./dark.scss";
+@import "./light.scss";
+
+.theme-container {
+  &.dark {
+    // @include dark-theme;
+    @import "./dark.scss";
+    background-color: $color-background;
+
+    h2 {
+      color: $color-heading;
+    }
+  }
+
+  &.light {
+    // @include light-theme;
+    @import "./light.scss";
+    background-color: $color-background;
+  }
+  h2 {
+    color: $color-heading;
+  }
+}
+
+//   .heading {
+//     // Shared styles for headings can go here
+//   }
+
+//   .para {
+//     // Shared styles for paragraphs can go here
+//   }
+// }
+
+// @mixin apply-theme($theme, $background-color) {
+//   @if $theme == "light" {
+//     @if $background-color {
+//       background-color: $background-color;
+//     }
+//   } @else if $theme == "dark" {
+//     @if background-color {
+//       background-color: $background-color;
+//     }
+//   }
+
+// .theme-container {
+//   padding: 20px;
+//   &.dark {
+//     @include apply-theme($theme: dark, $background-color: $dark-background);
+//   }
+//   h2 {
+//     color: #fff;
+//   }
+//   .toggle__btn {
+//     @include btn(
+//       $padding: 10px 20px,
+//       $border: 1px solid #fff,
+//       $background-color: #fff,
+//       $color: #000,
+//       $hover-background-color: #000,
+//       $hover-color: #fff,
+//       $radius: 5px
+//     );
+//   }
+
+//   .toggle__btn {
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     color: yellow;
+//     padding: 10px 20px;
+//     background-color: transparent;
+//     &:hover {
+//       color: blue;
+//       background-color: pink;
+//     }
+//   }
+
+//   // light mode
+//   &.light {
+//     @include apply-theme($theme: light, $background-color: $light-background);
+//     h2 {
+//       color: #000;
+//     }
+//     .toggle__btn {
+//       @include btn(
+//         $padding: 10px 20px,
+//         $border: 1px solid #000,
+//         $background-color: #000,
+//         $color: #fff,
+//         $hover-background-color: #fff,
+//         $hover-color: #000,
+//         $radius: 5px
+//       );
+//     }
+//   }
+// }
+
+// export const updateContainerHeight = () => {
+//   return window.innerHeight;
+// };
+
+// export const upDateHeightonScreenChange = () => {
+//   updateContainerHeight();
+//   window.addEventListener("resize", updateContainerHeight);
+//   return () => {
+//     window.removeEventListener("resize", updateContainerHeight);
+//   };
+// };
+
+// const height = updateContainerHeight();
+// upDateHeightonScreenChange();
+
+// container width and height should be in %/rem
+// and font-size should be in px

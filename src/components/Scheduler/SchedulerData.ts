@@ -176,26 +176,93 @@ function getCurrentDay() {
   return { day: day, dayName: dayName, toDayDate: todayDate };
 }
 
-export const getWeekdays = (date: any, option: string) => {
-  const daysOfWeek = ["Sunday", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const weekDates = [];
+// export const getWeekdays = (date: any, option: string) => {
+//   const daysOfWeek = ["Sunday", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+//   const weekDates = [];
 
+//   if (option !== "day") {
+//     for (let i = 0; i < 6; i++) {
+//       const current = new Date(date);
+//       current.setDate(date.getDate() + i);
+//       weekDates.push({
+//         dayName: daysOfWeek[current.getDay()],
+//         date: current.toISOString().split("T")[0],
+//       });
+//     }
+//   } else {
+//     const currentDay = new Date(date);
+//     weekDates.push({
+//       dayName: daysOfWeek[currentDay.getDay()],
+//       date: currentDay.toISOString().split("T")[0],
+//     });
+//   }
+
+//   return weekDates;
+// };
+
+export const getWeekdays = (date: Date, option: string) => {
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const weekDates = [];
+  console.log(date);
+  
   if (option !== "day") {
     for (let i = 0; i < 6; i++) {
-      const current = new Date(date);
-      current.setDate(date.getDate() + i);
+      const current = new Date(date); // Clone the date
+      const weekName = new Date(date); // Clone the date
+      weekName.setDate(date.getDate() + i); // Increment the date by i days
+      current.setDate(date.getDate() + i + 1); // Increment the date by i days
       weekDates.push({
-        dayName: daysOfWeek[current.getDay()],
-        date: current.toISOString().split("T")[0],
+        dayName: daysOfWeek[weekName.getDay()],
+        date: current.toISOString().split("T")[0], // Format date to YYYY-MM-DD
       });
     }
   } else {
-    const currentDay = new Date(date);
+    const currentDay = new Date(date.getTime());
     weekDates.push({
       dayName: daysOfWeek[currentDay.getDay()],
       date: currentDay.toISOString().split("T")[0],
     });
   }
-
+  
   return weekDates;
+};
+
+
+export const scheduledTaskHeightCalculation = (apiFromTimeStart:string, apiToTimeStart:string, apiFromTimeEnd:string, apiToTimeEnd:string, totalColumnHeight:number) => {
+  //  9 to 9 => same start time value and end time value
+  if (
+      Number(apiFromTimeStart) ===
+      Number(apiToTimeStart)
+    ) {
+      // 9:00 - 9:30
+      return Number(apiToTimeEnd) * 1.6;                              
+    }
+
+    // 9 t0 10 => different start time value and end time value
+    if (
+      Number(apiFromTimeStart) !==
+      Number(apiToTimeStart)
+    ) {
+      // 9:05 - 10:40
+      if (
+        Number(apiFromTimeEnd) !== Number(apiToTimeEnd)
+      ) {
+        return Math.round(
+          (Number(apiToTimeStart) -
+            Number(apiFromTimeStart)) *
+            totalColumnHeight -
+            Number(apiFromTimeEnd) * 1.6 +
+            Number(apiToTimeEnd) * 1.6
+        );                                
+      }
+      if (
+        Number(apiFromTimeEnd) === Number(apiToTimeEnd)
+      ) {
+        return Math.round(
+          (Number(apiToTimeStart) -
+            Number(apiFromTimeStart)) *
+            totalColumnHeight
+        );                                
+      }
+    }
 };
