@@ -16,6 +16,7 @@ import TableComponent from "./components/Table/TableComponent";
 import Scheduler from "./components/Scheduler/Scheduler";
 import ReactHookForm from "./components/Input/ReactHookForm";
 import ThemeSwitcher from "./components/ThemeBuilder/ThemeSwitcher";
+import Easy from "./InterviewPanel/easy/easy";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Link to="scheduler">Scheduler</Link>
         <Link to="rhf">RHF</Link>
         <Link to="ts">Theme</Link>
+        <Link to="interview-easy">Interview Easy</Link>
       </div>
       <Routes>
         <Route path="/" element={<Component1 />} />
@@ -48,7 +50,8 @@ function App() {
         <Route path="table" element={<TableComponent />} />
         <Route path="scheduler" element={<Scheduler />} />
         <Route path="rhf" element={<ReactHookForm />} />     
-        <Route path="ts" element={<ThemeSwitcher />} />        
+        <Route path="ts" element={<ThemeSwitcher />} />
+        <Route path="interview-easy" element={<Easy />} />        
       </Routes>
     </BrowserRouter>
   );
