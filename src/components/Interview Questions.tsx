@@ -487,6 +487,8 @@ function InterviewQuestions() {
   }
   CoutingSort();
 
+
+// Generic js program to print the passed nested object keys and values.
   function genericObjectProgram(myObject: {[key: string]:  string | {[key:string]: string}}) {
     for (let key in myObject) {
      if (myObject.hasOwnProperty(key) && typeof myObject[key] !== 'object') {
