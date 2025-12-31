@@ -22,7 +22,7 @@ import JsQs from "./InterviewPanel/JsQs";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/practice">
       <div style={{ display: "inline-flex", columnGap: 20 }}>
         {/* <Link to="/">Home</Link>
         <Link to="arraymethods">Array methods</Link>

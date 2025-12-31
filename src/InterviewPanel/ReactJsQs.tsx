@@ -354,6 +354,9 @@ setTasks(tasks);
 }));
 `}</code>
       </pre>
+
+      <h1>5.  How does key prop impact rendering? What goes wrong with index as key?</h1>
+      <p>The key prop in React helps identify list items for efficient re-rendering. Using a stable unique ID ensures correct mapping of components. Using the index as a key can cause bugs with reordering, insertions, deletions, and component state because React may reuse DOM nodes incorrectly.</p>
     </div>
   );
 }
