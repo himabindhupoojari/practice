@@ -1,0 +1,13 @@
+
+
+# Auto-detect text files and normalize them to LF on commit, and CRLF on checkout on Windows
+* text=auto
+
+# Explicitly set line endings for specific file types if necessary
+*.sh text eol=lf
+*.bat text eol=crlf
+*.md text eol=lf
+
+
+
+# echo "* text=auto" > .gitattributes
