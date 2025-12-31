@@ -489,32 +489,32 @@ function InterviewQuestions() {
 
 
 // Generic js program to print the passed nested object keys and values.
-  function genericObjectProgram(myObject: {[key: string]:  string | {[key:string]: string}}) {
-    for (let key in myObject) {
-     if (myObject.hasOwnProperty(key) && typeof myObject[key] !== 'object') {
-       console.log(key,  ":" , myObject[key]);
-     }
+//   function genericObjectProgram(myObject: {[key: string]:  string | {[key:string]: string}}) {
+//     for (let key in myObject) {
+//      if (myObject.hasOwnProperty(key) && typeof myObject[key] !== 'object') {
+//        console.log(key,  ":" , myObject[key]);
+//      }
      
-     if(typeof myObject[key] === 'object'){
-         for (let key2 in myObject[key]) {
-             console.log(key,".",key2, ":", myObject[key][key2]);
-         }
-     }
-   }
-}
+//      if(typeof myObject[key] === 'object'){
+//          for (let key2 in myObject[key]) {
+//              console.log(key,".",key2, ":", myObject[key][key2]);
+//          }
+//      }
+//    }
+// }
 
-genericObjectProgram({
-    name: 'Bindu',
-    place: {
-        city: 'hyderabd',
-        address: 'chandhanagar',
-        pincode: '500050',
-    },
-    details:{
-        phnNo: '9100775633',
-    },
-    gender: 'female',
-})
+// genericObjectProgram({
+//     name: 'Bindu',
+//     place: {
+//         city: 'hyderabd',
+//         address: 'chandhanagar',
+//         pincode: '500050',
+//     },
+//     details:{
+//         phnNo: '9100775633',
+//     },
+//     gender: 'female',
+// })
 
   return (
     <div>

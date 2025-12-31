@@ -17,12 +17,14 @@ import Scheduler from "./components/Scheduler/Scheduler";
 import ReactHookForm from "./components/Input/ReactHookForm";
 import ThemeSwitcher from "./components/ThemeBuilder/ThemeSwitcher";
 import Easy from "./InterviewPanel/easy/easy";
+import ReactJsQs from "./InterviewPanel/ReactJsQs";
+import JsQs from "./InterviewPanel/JsQs";
 
 function App() {
   return (
     <BrowserRouter>
       <div style={{ display: "inline-flex", columnGap: 20 }}>
-        <Link to="/">Home</Link>
+        {/* <Link to="/">Home</Link>
         <Link to="arraymethods">Array methods</Link>
         <Link to="themeauth">Themeauth()</Link>
         <Link to="redux">Redux</Link>
@@ -34,7 +36,9 @@ function App() {
         <Link to="scheduler">Scheduler</Link>
         <Link to="rhf">RHF</Link>
         <Link to="ts">Theme</Link>
-        <Link to="interview-easy">Interview Easy</Link>
+        <Link to="interview-easy">Interview Easy</Link> */}
+        <Link to="reactjs-qs">React Js Q&As</Link>
+        <Link to="js-qs">Js Q&As</Link>
       </div>
       <Routes>
         <Route path="/" element={<Component1 />} />
@@ -51,7 +55,9 @@ function App() {
         <Route path="scheduler" element={<Scheduler />} />
         <Route path="rhf" element={<ReactHookForm />} />     
         <Route path="ts" element={<ThemeSwitcher />} />
-        <Route path="interview-easy" element={<Easy />} />        
+        <Route path="interview-easy" element={<Easy />} />
+        <Route path="reactjs-qs" element={<ReactJsQs />} />
+        <Route path="js-qs" element={<JsQs />} />        
       </Routes>
     </BrowserRouter>
   );
