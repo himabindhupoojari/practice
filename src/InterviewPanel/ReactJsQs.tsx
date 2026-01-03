@@ -357,6 +357,289 @@ setTasks(tasks);
 
       <h1>5.  How does key prop impact rendering? What goes wrong with index as key?</h1>
       <p>The key prop in React helps identify list items for efficient re-rendering. Using a stable unique ID ensures correct mapping of components. Using the index as a key can cause bugs with reordering, insertions, deletions, and component state because React may reuse DOM nodes incorrectly.</p>
+
+      <p><strong>Example:</strong></p>
+      <pre>
+        <code>{`const items = ['A', 'B', 'C'];
+// initial render with index keys: 0, 1, 2
+
+// remove 'A'
+const newItems = ['B', 'C'];
+`}</code>
+      </pre>
+      <ul>
+        <li>If keys are indices, React thinks 'B' is still key 0, so it reuses 'A'’s DOM node.</li>
+        <li>The content is correct, but any internal state (like inputs) will be wrong.</li>
+        <li>If keys are unique IDs, React correctly matches 'B' to 'B'’s previous DOM node.</li>
+      </ul>
+
+      <h3>✅ Best Practice</h3>
+      <ul>
+        <li>Always use a stable, unique identifier from your data (like id).</li>
+        <li>Only use index as a last resort, and only if:
+          <ol>
+            <li>The list is static and never reordered</li>
+            <li>Components inside the list don’t hold state</li>
+          </ol>
+        </li>
+      </ul>
+
+      <h1>6.What are Higher Order Components vs Custom Hooks? When would you use each?</h1>
+      <p>Higher-Order Components (HOCs) and Custom Hooks are both ways to reuse logic in React, but they work differently and are used in different scenarios.</p>
+      <h3>🔼 Higher-Order Components (HOCs)</h3>
+      <p><strong>Definition</strong></p>
+      <p>A Higher-Order Component is a function that takes a component and returns a new component with added functionality.</p>
+      <pre>
+        <code>
+          {`const withLogger = (WrappedComponent) => {
+  return function Enhanced(props) {
+    console.log("Rendered with props:", props);
+    return <WrappedComponent {...props} />;
+  };
+};
+`}
+        </code>
+      </pre>
+
+      <p><strong>Usage:</strong></p>
+      <pre>
+        <code>
+          {`const UserWithLogger = withLogger(User);
+`}
+        </code>
+      </pre>
+
+      <p><strong>When to Use HOCs</strong></p>
+      <ul>
+        <li>You need to enhance or wrap UI components with extra features.</li>
+        <li>Adding props or injecting data into components.</li>
+        <li>Cross-component concerns like:
+          <ul>
+            <li>Authentication wrappers (e.g., ProtectedRoute)</li>
+            <li>Theming or layout wrappers</li>
+            <li>Feature toggles</li>
+            <li>Conditional rendering based on user roles</li>
+          </ul>
+        </li>
+      </ul>
+
+
+      <p><strong>Pros</strong></p>\
+      <ul>
+        <li>Can inject or modify props</li>
+        <li>Good for UI wrapping</li>
+      </ul>
+      <p><strong>Cons</strong></p>
+      <ul>
+        <li>Can lead to wrapper hell (nested HOCs)</li>
+        <li>Harder to debug</li>
+        <li>Not as clean as hooks for pure logic sharing</li>
+      </ul>
+
+      <h3>sharing🪝 Custom Hooks</h3>
+      <p><strong>Definition</strong></p>
+      <p>A custom hook is a reusable function starting with use that contains stateful or side-effect logic, and can be shared across components.</p>
+      <pre>
+        <code>
+          {`function useFetch(url) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch(url).then(res => res.json()).then(setData);
+  }, [url]);
+
+  return data;
+}`}
+        </code>
+      </pre>
+
+      <p><strong>Usage:</strong></p>
+      <pre>
+        <code>{`const data = useFetch("/api/users");`}</code>
+      </pre>
+
+      <p><strong>When to Use Custom Hooks</strong></p>
+      <ul>
+        <li>Sharing logic, not UI</li>
+        <li>Reusing stateful logic: fetching, forms, timers, auth state</li>
+        <li>Avoiding duplication across components</li>
+        <li>Logic that doesn't require UI wrapping</li>
+      </ul>
+
+      <p><strong>Pros</strong></p>
+      <ul>
+        <li>Clean & readable</li>
+        <li>No render wrappers</li>
+        <li>Best for logic reuse</li>
+        <li>Replaced many HOC use cases in modern React</li>
+      </ul>
+      <p><strong>Cons</strong></p>
+      <ul>
+        <li>Can't wrap or modify UI</li>
+        <li>Can't force props, only return values or handlers</li>
+      </ul>
+
+      <h1>7.How would you design a scalable frontend architecture for a large application?</h1>
+      <p>I would design a scalable frontend by using a feature-based architecture, separating UI, state, and services. Reusable UI components live in a shared library, business logic goes into custom hooks or domain layers, and network requests are centralized. I would apply code-splitting, global state tools like Redux Toolkit/React Query, automated testing, and CI/CD to ensure scalability as the project grows.</p>
+      <h3>🚀 Core Principles of Scalable Frontend Architecture</h3>
+      <p><strong>1.Separation of Concerns</strong></p>
+      <ul>
+        <li>UI, state, network logic, and routing should be clearly separated.</li>
+      </ul>
+
+      <p><strong>2.Feature-based or domain-based structure</strong></p>
+      <ul>
+        <li>Group files by features, not file type to avoid a massive /components folder mess.</li>
+      </ul>
+
+      <p><strong>3.Reusability & DRY</strong></p>
+      <ul>
+        <li>Shared logic via custom hooks, utilities, services, and design system components.</li>
+      </ul>
+
+      <p><strong>4.Performance & Code Splitting</strong></p>
+      <ul>
+        <li>Load only what users need; lazy load routes, optimize bundle.</li>
+      </ul>
+
+      <h3>🏗️ Recommended Folder Structure (Industry Standard)</h3>
+      <p>Feature-Based Architecture</p>
+      <pre>
+        <code>{`src/
+  app/                   # App-wide setup (router, store, providers)
+  components/            # Truly shared UI components (buttons, modals, inputs)
+  features/
+    auth/
+      pages/
+      components/
+      hooks/
+      services/
+      auth.slice.ts
+    dashboard/
+    users/
+    products/
+  hooks/                 # Reusable logic (useFetch, useBreakpoints, etc.)
+  services/              # API calls, axios instance, caching, interceptors
+  store/                 # Redux/Zustand/Recoil setup
+  utils/                 # Formatters, validators, helpers
+  styles/                # Global styles, themes, variables
+`}</code>
+      </pre>
+
+      <p>✔ Each feature maintains its own pages, API, state, and components.</p>
+      <p>✔ Reduces coupling, easy for team scaling.</p>
+      <p>✔ Developers work without stepping on each other's code.</p>
+
+      <h3>🧱 Layered Architecture</h3>
+      <pre>
+        <code>{`| Layer                 | Responsibility                            |
+| --------------------- | ----------------------------------------- |
+| **Presentation (UI)** | Components, pages, layout, styling        |
+| **State / Data**      | Redux, Zustand, Recoil, or RTK Query      |
+| **Services**          | API calls, caching, axios, error handling |
+| **Domain Logic**      | Feature-specific business rules           |
+| **Utilities**         | Helpers, constants, config                |
+`}</code>
+      </pre>
+
+      <p>This ensures the UI isn’t tied to direct API calls or deeply nested logic.</p>
+
+      <h3>🔌 API & Network Layer</h3>
+      <p>Create a centralized axios instance or fetch wrapper:</p>
+      <pre>
+        <code>{`// services/http.ts
+import axios from "axios";
+
+const http = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  timeout: 10000,
+});
+
+http.interceptors.response.use(
+  res => res,
+  err => {
+    // Global error handling (401 logout, 500 toast)
+    return Promise.reject(err);
+  }
+);
+
+export default http;
+`}</code>
+      </pre>
+      <p>Each feature calls its own API module:</p>
+      <pre>
+        <code>{`// features/users/services/users.api.ts
+export const getUsers = () => http.get("/users");
+`}</code>
+      </pre>
+
+      <h3>🌐 Routing Strategy</h3>
+      <p>Use route-based code splitting for performance:</p>
+      <pre>
+        <code>{`const Dashboard = React.lazy(() => import("../features/dashboard/pages/Dashboard"));
+
+<Routes>
+  <Route path="/dashboard" element={
+    <Suspense fallback={<Loader />}>
+      <Dashboard />
+    </Suspense>
+  }/>
+</Routes>
+`}</code>
+      </pre>
+
+      <h3>📦 State Management Strategy</h3>
+      <p>Use the right tool for the job:</p>
+      <pre>
+        <code>{`| Use Case           | Best Choice             |
+| ------------------ | ----------------------- |
+| Local UI state     | useState / useReducer   |
+| Global app state   | Redux Toolkit / Zustand |
+| Server cache & API | RTK Query / React Query |
+| Form Handling      | React Hook Form         |
+`}</code>
+      </pre>
+      <p>Don't dump all state into Redux — that's how apps become unscalable.</p>
+
+      <h3>🎨 Design System / UI Consistency</h3>
+      <ul>
+        <li>Create reusable components: Button, Input, Modal, Table</li>
+        <li>Prefer a design system or a component library (MUI, Chakra, Tailwind + custom kit)</li>
+        <li>Use a theme provider for light/dark mode & brand tokens</li>
+      </ul>
+
+      <pre>
+        <code>{`styles/
+  theme.ts
+  variables.css
+  mixins.scss
+`}</code>
+      </pre>
+
+      <h3>⚡ Performance + Scalability Optimizations</h3>
+      <p>✔ Lazy load heavy features</p>
+      <p>✔ Memoize expensive components (React.memo, useMemo, useCallback)</p>
+      <p>✔ Virtualize large lists (react-window)</p>
+      <p>✔ Avoid prop drilling → context or state libs</p>
+
+      <h3>🧪 Testing Strategy</h3>
+      <pre>
+        <code>{`| Layer         | Tests                 |
+| ------------- | --------------------- |
+| UI Components | React Testing Library |
+| Logic / hooks | Jest                  |
+| API Layer     | Mock service worker   |
+| E2E           | Cypress               |
+`}</code>
+      </pre>
+
+      <h3>🛠️ DevOps + CI/CD Considerations</h3>
+      <ul>
+        <li>Linting: ESLint + Prettier</li>
+        <li>Formatting: Pre-commit Husky hooks</li>
+        <li>Git branching strategy for teamwork (feature → dev → main)</li>
+        <li>ENV config based on environment</li>
+      </ul>
     </div>
   );
 }
