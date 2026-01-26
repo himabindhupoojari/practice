@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Link, Route, Routes } from "react-router-dom";
 // import "./App.css";
 import Component1 from "./components/Component1";
 import Component2 from "./components/Component2";
@@ -22,7 +22,7 @@ import JsQs from "./InterviewPanel/JsQs";
 
 function App() {
   return (
-    <BrowserRouter basename="/practice">
+    <HashRouter>
       <div style={{ display: "inline-flex", columnGap: 20 }}>
         {/* <Link to="/">Home</Link>
         <Link to="arraymethods">Array methods</Link>
@@ -37,11 +37,12 @@ function App() {
         <Link to="rhf">RHF</Link>
         <Link to="ts">Theme</Link>
         <Link to="interview-easy">Interview Easy</Link> */}
-        <Link to="reactjs-qs">React Js Q&As</Link>
+        <Link to="/">React Js Q&As</Link>
         <Link to="js-qs">Js Q&As</Link>
       </div>
       <Routes>
-        <Route path="/" element={<Component1 />} />
+        {/* <Route path="/" element={<Component1 />} /> */}
+        <Route path="/" element={<ReactJsQs />} />
         <Route path="add_delete_row" element={<Component2 />} />
         <Route path="usecontext" element={<CreateContextApiReact />} />
         <Route path="arraymethods" element={<ArrayMethods />} />
@@ -56,10 +57,10 @@ function App() {
         <Route path="rhf" element={<ReactHookForm />} />     
         <Route path="ts" element={<ThemeSwitcher />} />
         <Route path="interview-easy" element={<Easy />} />
-        <Route path="reactjs-qs" element={<ReactJsQs />} />
+        {/* <Route path="reactjs-qs" element={<ReactJsQs />} /> */}
         <Route path="js-qs" element={<JsQs />} />        
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -326,6 +326,19 @@ getData();
                 <li>✔ Use React DevTools & Chrome Memory Profiler to detect leaks</li>
                 <li>✔ Use AbortController for fetch cleanup</li>
             </ul>
+
+            <h1>4. Explain me the var let and const.</h1>
+            <h3>🔥 Key Differences (Interview Table)</h3>
+            <pre>
+              <code>{`| Feature   | var           | let     | const     |
+| --------- | --------------- | --------- | ----------- |
+| Scope     | Function        | Block     | Block       |
+| Hoisting  | Yes (undefined) | Yes (TDZ) | Yes (TDZ)   |
+| Redeclare | ✅ Yes           | ❌ No      | ❌ No        |
+| Reassign  | ✅ Yes           | ✅ Yes     | ❌ No        |
+| Use Today | ❌ Avoid         | ✅ Yes     | ✅ Preferred |
+`}</code>
+            </pre>
         </div>
     );
 }
