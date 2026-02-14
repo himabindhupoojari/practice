@@ -640,6 +640,343 @@ export const getUsers = () => http.get("/users");
         <li>Git branching strategy for teamwork (feature → dev → main)</li>
         <li>ENV config based on environment</li>
       </ul>
+
+      <h1>Real world example for useCallback and usememo.</h1>
+      <pre>
+        <code>{`
+import React, { useState, useMemo, useCallback } from "react";
+
+const UserRow = React.memo(({ user, onEdit }) => {
+  return (
+    <tr>
+      <td>{user.name}</td>
+      <td>{user.role}</td>
+      <td>
+        <button onClick={() => onEdit(user)}>Edit</button>
+      </td>
+    </tr>
+  );
+});
+
+export default function UserDashboard({ users }) {
+  const [search, setSearch] = useState("");
+
+  const filteredUsers = useMemo(() => {
+    return users.filter(user =>
+      user.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [users, search]);
+
+  const handleEdit = useCallback((user) => {
+    alert("Editing " + user.name);
+  }, []);
+
+  return (
+    <>
+      <input
+        placeholder="Search users..."
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+      />
+
+      <table>
+        <tbody>
+          {filteredUsers.map(user => (
+            <UserRow
+              key={user.id}
+              user={user}
+              onEdit={handleEdit}
+            />
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+}
+`}</code>
+      </pre>
+      <p><strong>I use useMemo to prevent expensive operations like filtering and sorting large datasets from running on every render, and useCallback to memoize event handlers so memoized child components don’t re-render unnecessarily.</strong></p>
+
+      <h1>React.memo.</h1>
+      <p>React.memo is used to prevent unnecessary re-renders of a component.</p>
+      <p>Only re-render this component if its props change.</p>
+
+      <pre>
+        <code>{`const Button = React.memo(({ label }) => {
+  console.log("Rendered");
+  return <button>{label}</button>;
+});
+`}</code>
+      </pre>
+      <p><strong>If the parent re-renders but label stays the same → Button will NOT re-render ✅</strong></p>
+      <h3>When to Use:</h3>
+
+      <ul>
+        <li>✔ Large lists</li>
+        <li>✔ Pure UI components</li>
+        <li>✔ Dashboard rows / cards / tables</li>
+        <li>✔ Performance-critical screens</li>
+      </ul>
+
+      <h1>Core React</h1>
+      <h1>Difference between state and props</h1>
+      <p>Props are read-only data passed from parent to child components, while state is mutable data managed within a component that controls its behavior and re-rendering.</p>
+      <p>
+        <pre>
+          <code>
+            {`| Feature           | Props                        | State                    |
+| ----------------- | ---------------------------- | ------------------------ |
+| Ownership         | Passed from parent           | Managed inside component |
+| Mutability        | Read-only                    | Can be updated           |
+| Purpose           | Configuration / Data passing | Dynamic behavior         |
+| Who updates it?   | Parent component             | Component itself         |
+| Causes re-render? | Yes (if value changes)       | Yes (when updated)       |
+`}
+          </code>
+        </pre>
+      </p>
+      <p>👉 Props = Input to a component, immutable</p>
+      <p>👉 State = Component’s internal data Is mutable (can be changed)</p>
+      <h3>Using props</h3>
+      <p>
+        <pre>
+          <code>{`function Child(props) {
+  return <h1>Hello {props.name}</h1>;
+}
+
+function Parent() {
+  return <Child name="HimaBindu" />;
+}
+`}</code>
+        </pre>
+      </p>
+
+      <h3>Using props</h3>
+      <p>
+        <pre><code>
+          {`import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <h1>{count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </>
+  );
+}
+`}
+        </code></pre>
+      </p>
+      <h1>What is useEffect?</h1>
+      <p>useEffect is a React Hook used to handle side effects in functional components.</p>
+      <p>👉 Side effects = things that happen outside normal rendering:</p>
+      <p>useEffect is a hook that runs side effects after the component renders, and its execution depends on the dependency array.</p>
+      <p>API calls, Subscriptions, Timers, DOM manipulation, Event listeners</p>
+      <p><strong>Basic Syntax</strong></p>
+      <p>
+        <pre>
+          <code>{`useEffect(() => {
+  // Side effect logic
+
+  return () => {
+    // Cleanup (optional)
+  };
+}, [dependencies]);
+`}</code>
+        </pre>
+      </p>
+      <p><strong>🔹How useEffect Works (Step-by-Step)</strong></p>
+      <p>1️⃣ Component renders<br />
+        2️⃣ React updates the DOM<br />
+        3️⃣ Then useEffect runs<br />
+        4️⃣ If dependencies change → effect runs again<br />
+        5️⃣ If component unmounts → cleanup runs<br />
+
+        👉 Important: useEffect runs after render</p>
+
+      <p>✔ It replaces lifecycle methods:</p>
+      <ul>
+        <li>componentDidMount</li>
+        <li>componentDidUpdate</li>
+        <li>componentWillUnmount</li>
+      </ul>
+
+      <h1>Dependency array mistakes.</h1>
+      <p>Common mistakes include missing dependencies leading to stale closures, causing infinite loops by updating state inside effects, using objects or functions without memoization, and ignoring ESLint warnings.</p>
+      <p>🧠 Senior-Level Insight</p>
+      <ol>
+        <li>Dependency array uses referential equality (Object.is)</li>
+        <li>Functions and objects cause re-renders unless memoized</li>
+        <li>Stale closures are the most dangerous bug</li>
+        <li>Effects should be used for side effects only — not data derivation</li>
+      </ol>
+
+      <h1>Controlled vs uncontrolled components.</h1>
+      <p>Controlled components are managed by React state, while uncontrolled components store their own state in the DOM and are accessed using refs.</p>
+      <h3>🔵 1️⃣ Controlled Components</h3>
+      <p>A controlled component is a form element whose value is controlled by React state.</p>
+      <p><strong>✅ Example (Controlled)</strong></p>
+      <p>
+        <pre>
+          <code>{`import { useState } from "react";
+
+function Form() {
+  const [name, setName] = useState("");
+
+  return (
+    <input
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+    />
+  );
+}
+`}</code>
+        </pre>
+      </p>
+      <p><strong>🔎 What’s happening?</strong></p>
+      <ul>
+        <li>Input value comes from name state</li>
+        <li>On every change → state updates</li>
+        <li>UI always reflects React state</li>
+      </ul>
+      <p>✔ Predictable<br />
+        ✔ Easy validation<br />
+        ✔ Better for dynamic forms</p>
+
+      <h3>🔴 2️⃣ Uncontrolled Components</h3>
+      <p>An uncontrolled component stores its own state in the DOM.</p>
+      <p><strong>✅ Example (Uncontrolled)</strong></p>
+      <p>
+        <pre>
+          <code>{`import { useRef } from "react";
+
+function Form() {
+  const inputRef = useRef();
+
+  const handleSubmit = () => {
+    console.log(inputRef.current.value);
+  };
+
+  return (
+    <>
+      <input ref={inputRef} />
+      <button onClick={handleSubmit}>Submit</button>
+    </>
+  );
+}
+`}</code>
+        </pre>
+      </p>
+      <p><strong>🔎 What’s happening?</strong></p>
+      <ul>
+        <li>Input manages its own value</li>
+        <li>We read value only when needed</li>
+        <li>React does not control it</li>
+        <p>✔ Less code<br />
+          ✔ Slightly better performance in large forms<br />
+          ❌ Harder validation</p>
+      </ul>
+
+      <h3>🔥 Key Differences (Interview Table)</h3>
+      <p>
+        <pre>
+          <code>{`| Feature             | Controlled         | Uncontrolled |
+| ------------------- | ------------------ | ------------ |
+| Data Source         | React state        | DOM          |
+| Value Access        | via state          | via ref      |
+| Re-render on change | Yes                | No           |
+| Validation          | Easy               | Manual       |
+| Recommended?        | ✅ Yes (most cases) | Rare cases   |
+`}</code>
+        </pre>
+      </p>
+
+      <h1>Lifting state up.</h1>
+      <p>Lifting state up is the process of moving state to the nearest common parent so that multiple components can share and stay synchronized with the same data.</p>
+      <p>React follows:<br />
+
+        🔁 Unidirectional Data Flow (Top → Down)<br /><br />
+
+        If two sibling components need the same data:<br />
+
+        <ul>
+          <li>They cannot directly share state</li>
+          <li>So we move state to their parent</li>
+        </ul>
+        That process is called lifting state up.</p>
+
+      <h3>🔹 Example Without Lifting (Problem)</h3>
+      <p>
+        <pre>
+          <code>{`function ChildA() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>+</button>;
+}
+
+function ChildB() {
+  return <p>Count: ???</p>;
+}
+`}</code>
+        </pre>
+      </p>
+      <p>👉 ChildB cannot access ChildA's state<br />
+        👉 No shared data</p>
+
+      <h3>🔹 Example With Lifting State Up (Correct)</h3>
+      <p>
+        <pre>
+          <code>{`import { useState } from "react";
+
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <ChildA count={count} setCount={setCount} />
+      <ChildB count={count} />
+    </>
+  );
+}
+
+function ChildA({ count, setCount }) {
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Increment
+    </button>
+  );
+}
+
+function ChildB({ count }) {
+  return <p>Count: {count}</p>;
+}
+`}</code>
+        </pre>
+      </p>
+      <p><strong>🔎 What Happened?</strong></p>
+      <p>
+        1️⃣ State moved to Parent<br />
+        2️⃣ Passed as props to children<br />
+        3️⃣ One child updates<br />
+        4️⃣ Other child reflects changes<br />
+
+        ✔ Single source of truth<br />
+        ✔ Predictable data flow
+
+      </p>
+
+      <p><strong>🎯 Real Interview Scenario</strong></p>
+      <p>
+        <b>Interviewer might ask:</b></p>
+      <p>
+        If two distant components need the same state, would you always lift it up?</p>
+      <p><b>Best answer:</b></p>
+      <p>
+        "If they share a close parent, yes. If not, I would consider Context API or a global state solution to avoid prop drilling."</p>
+
+        <p><strong>❓ What problem does lifting state up solve?</strong></p>
+        <p>👉 It prevents duplicated state and inconsistency between components.</p>
     </div>
   );
 }
