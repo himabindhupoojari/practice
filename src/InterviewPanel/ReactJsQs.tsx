@@ -975,8 +975,194 @@ function ChildB({ count }) {
       <p>
         "If they share a close parent, yes. If not, I would consider Context API or a global state solution to avoid prop drilling."</p>
 
-        <p><strong>❓ What problem does lifting state up solve?</strong></p>
-        <p>👉 It prevents duplicated state and inconsistency between components.</p>
+      <p><strong>❓ What problem does lifting state up solve?</strong></p>
+      <p>👉 It prevents duplicated state and inconsistency between components.</p>
+
+      <h3>Real-world example (like filters + table sync)s</h3>
+      <p><strong>🧩 Problem Statement</strong><br />
+
+        You have:<br />
+
+        🔍 A Filter Component (search, status dropdown, date range)<br />
+
+        📊 A Table Component (displays filtered data)<br />
+
+        Both need to stay synchronized.</p>
+
+      <p><strong>❌ Wrong Approach (State Inside Filter Only)</strong></p>
+      <p>
+        <pre>
+          <code>{`function Filter() {
+  const [search, setSearch] = useState("");
+
+  return <input onChange={(e) => setSearch(e.target.value)} />;
+}
+
+function Table() {
+  // No access to search value ❌
+}
+`}</code>
+        </pre>
+      </p>
+      <p>👉 Table cannot access filter state<br />
+        👉 No synchronization<br />
+        👉 Duplicate state may appear</p>
+
+      <p><strong>✅ Correct Approach: Lift State to Parent</strong></p>
+      <p>
+        <pre>
+          <code>{`Parent (Holds State)
+   ├── Filter (Updates State)
+   └── Table (Reads State)
+`}</code>
+        </pre>
+      </p>
+
+      <p><strong>💻 Example</strong></p>
+
+      <p><strong>Parent component</strong></p>
+
+      <p><pre>
+        <code>{`import { useState, useMemo } from "react";
+
+function Parent() {
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("all");
+
+  const data = [
+    { id: 1, name: "Hima", status: "active" },
+    { id: 2, name: "John", status: "inactive" },
+  ];
+
+  const filteredData = useMemo(() => {
+    return data.filter(item => {
+      const matchesSearch = item.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+      const matchesStatus =
+        status === "all" || item.status === status;
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [search, status]);
+
+  return (
+    <>
+      <Filter
+        search={search}
+        setSearch={setSearch}
+        status={status}
+        setStatus={setStatus}
+      />
+      <Table data={filteredData} />
+    </>
+  );
+}
+`}</code></pre></p>
+
+      <p><strong>Filter component</strong></p>
+      <p>
+        <pre>
+          <code>{`function Filter({ search, setSearch, status, setStatus }) {
+  return (
+    <>
+      <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search..."
+      />
+
+      <select
+        value={status}
+        onChange={(e) => setStatus(e.target.value)}
+      >
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </>
+  );
+}
+`}</code>
+        </pre>
+      </p>
+
+      <p><strong>Table component</strong></p>
+      <p>
+        <pre>
+          <code>{`function Table({ data }) {
+  return (
+    <table>
+      <tbody>
+        {data.map(item => (
+          <tr key={item.id}>
+            <td>{item.name}</td>
+            <td>{item.status}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+`}</code>
+        </pre>
+      </p>
+
+      <p><strong>
+        🔎 What’s Happening?</strong><br />
+
+        ✔ Parent holds filter state<br />
+        ✔ Filter updates state<br />
+        ✔ Table reads filtered data<br />
+        ✔ useMemo optimizes recalculation</p>
+
+      <p>
+        <strong>🔥 Why This Is Important in Interviews</strong><br />
+
+        This demonstrates:
+
+        <ul>
+          <li>Lifting state up</li>
+          <li>Single source of truth</li>
+          <li>Controlled components</li>
+          <li>Performance optimization</li>
+          <li>Proper data flow</li>
+        </ul>
+      </p>
+
+      <p><strong>🧠 Senior-Level Enhancement</strong><br />
+
+        In real applications:<br />
+
+        <b>🔹 If data comes from API</b><br />
+
+        You might:</p>
+
+      <p>
+        <pre>
+          <code>{`useEffect(() => {
+  fetchData(search, status);
+}, [search, status]);
+`}</code>
+        </pre>
+        Instead of filtering locally.
+      </p>
+
+      <p><strong>🔹 If filters become complex</strong><br/>
+
+        Consider:
+            <ul>
+              <li>Debouncing search</li>
+              <li>Memoizing filter logic</li>
+              <li>Using React Query for server filtering</li>
+              <li>Using Zustand/Redux if filters are global</li>
+            </ul>
+        </p>
+
+        <h1>Advanced</h1>
+        <h1>useMemo vs useCallback</h1>
+        <p>useMemo memoizes a value, while useCallback memoizes a function.</p>
     </div>
   );
 }
