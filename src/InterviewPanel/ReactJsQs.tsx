@@ -1149,20 +1149,334 @@ function Parent() {
         Instead of filtering locally.
       </p>
 
-      <p><strong>🔹 If filters become complex</strong><br/>
+      <p><strong>🔹 If filters become complex</strong><br />
 
         Consider:
-            <ul>
-              <li>Debouncing search</li>
-              <li>Memoizing filter logic</li>
-              <li>Using React Query for server filtering</li>
-              <li>Using Zustand/Redux if filters are global</li>
-            </ul>
-        </p>
+        <ul>
+          <li>Debouncing search</li>
+          <li>Memoizing filter logic</li>
+          <li>Using React Query for server filtering</li>
+          <li>Using Zustand/Redux if filters are global</li>
+        </ul>
+      </p>
 
-        <h1>Advanced</h1>
-        <h1>useMemo vs useCallback</h1>
-        <p>useMemo memoizes a value, while useCallback memoizes a function.</p>
+      <h1>Advanced</h1>
+      <h1>useMemo vs useCallback</h1>
+      <p>useMemo memoizes a value, while useCallback memoizes a function.</p>
+
+      <h1>Keys in lists</h1>
+      <p><strong>Keys are special attributes used to identify elements in a list.</strong></p>
+      <p>
+        <pre>
+          <code>{`{items.map((item) => (
+  <input key={item.id} defaultValue={item.name} />
+))}`}</code>
+        </pre>
+      </p>
+      <p><q>Using stable and unique keys ensures React performs minimal DOM updates and preserves component state correctly across renders.</q></p>
+
+      <h1>Context API vs Redux</h1>
+      <p><strong>Context API is ideal for lightweight global state, but for complex applications with frequent updates and debugging needs, Redux provides better performance optimization, structured state management, and tooling support.</strong></p>
+      <h3>🔵 1️⃣ Context API</h3>
+      <p>🔹 What it is:
+        <br />
+        A React feature to share data across components without prop drilling.</p>
+
+      <p><strong>
+
+        ✅ Example</strong></p>
+      <p>
+        <pre>
+          <code>{`const ThemeContext = React.createContext();
+
+function App() {
+  const [theme, setTheme] = useState("light");
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <Child />
+    </ThemeContext.Provider>
+  );
+}`}</code>
+        </pre>
+      </p>
+
+      <p><strong>🔹 Best For:</strong></p>
+      <p>
+        <ul>
+          <li>Theme (dark/light)</li>
+          <li>Auth user data</li>
+          <li>Language (i18n)</li>
+          <li>Small/global state</li>
+        </ul>
+      </p>
+      <p><strong>❗ Limitation:</strong></p>
+      <p><ul>
+        <li>Causes re-render of all consumers when value changes</li>
+        <li>No built-in structure (reducers, middleware, etc.)</li>
+        <li>Hard to scale for complex apps</li>
+      </ul>
+      </p>
+
+      <h3>🔴 2️⃣ Redux</h3>
+      <p><strong>🔹 What it is:</strong></p>
+      <p>A state management library with a predictable data flow.</p>
+      <p><strong>🔹 Core Concepts:</strong></p>
+      <p><ul>
+        <li>Store</li>
+        <li>Actions</li>
+        <li>Reducers</li>
+        <li>Dispatch</li>
+      </ul></p>
+
+      <p><strong>✅ Example (Redux Toolkit style)</strong></p>
+      <p>
+        <pre><code>{`const counterSlice = createSlice({
+  name: "counter",
+  initialState: { value: 0 },
+  reducers: {
+    increment: (state) => {
+      state.value += 1;
+    },
+  },
+});`}</code></pre>
+      </p>
+
+      <p><strong>🔹 Best For:</strong></p>
+      <p>
+        <ul><li>Large applications</li>
+          <li>Complex state logic</li>
+          <li>Multiple unrelated global states</li>
+          <li>Debugging & tracking changes</li></ul>
+      </p>
+
+      <p><strong>🔥 Advantages:</strong></p>
+
+      <p>
+        <ul>
+          <li>✔ Predictable state updates</li>
+          <li>✔ Middleware support (API calls, logging)</li>
+          <li>✔ DevTools (time travel debugging)</li>
+          <li>✔ Better scalability</li>
+        </ul>
+      </p>
+
+      <p><strong>🔎 Performance Difference (Important)</strong></p>
+      <p><b>Context API:</b></p>
+      <p>
+        <pre><code>{`value={{ user }}`}</code></pre>
+      </p>
+      <p>👉 When user changes → ALL consumers re-render</p>
+      <p><b>Redux:</b></p>
+      <p>👉 Only components using changed state re-render<br />
+        👉 Uses selectors for optimization</p>
+
+      <h1>How to optimize performance</h1>
+      <p><strong>🎯 Real-World Example (Your Use Case)</strong></p>
+      <p>For a large table with filters:</p>
+      <p>
+        <ul>
+          <li>✔ useMemo → filter data</li>
+          <li>✔ useCallback → row handlers</li>
+          <li>✔ React.memo → row components</li>
+          <li>✔ Virtualization → render only visible rows</li>
+          <li>✔ Debounce → search input</li>
+        </ul>
+      </p>
+      <p><b>To optimize React performance, I focus on minimizing unnecessary re-renders using React.memo, useMemo, and useCallback, optimizing state structure, using proper keys, debouncing expensive operations like API calls, and applying techniques like code splitting and list virtualization for large datasets.</b></p>
+
+      <h1>TypeScript</h1>
+      <h1>interface vs type</h1>
+      <p><strong>interface is mainly used for defining object shapes, while type is more flexible and can represent any type (primitives, unions, tuples, etc.)</strong></p>
+
+      <p><strong>🔵 1️⃣ Interface</strong></p>
+      <p>🔹 Used for:<br />
+
+        ✔ Defining object structure<br />
+
+        ✔ Extending other interfaces<br />
+
+        ✔ Class implementation</p>
+
+      <p><strong>✅ Example</strong></p>
+      <p>
+        <pre><code>{`interface User {
+  name: string;
+  age: number;
+}`}</code></pre>
+      </p>
+
+      <p><strong>🔹 Extending Interface</strong></p>
+      <p>
+        <pre><code>{`interface Employee extends User {
+  role: string;
+}`}</code></pre>
+      </p>
+
+      <p><strong>🔹 Declaration Merging (Important)</strong></p>
+      <p>
+        <pre><code>{`interface User {
+  name: string;
+}
+
+interface User {
+  age: number;
+}`}</code></pre>
+      </p>
+      <p>👉 Automatically merged:</p>
+      <p>
+        <pre><code>{`// { name: string; age: number }`}</code></pre>
+      </p>
+
+      <p><strong>🟢 2️⃣ Type</strong></p>
+      <p>🔹 More flexible:</p>
+      <p>Can define:<br />
+
+        ✔ Primitives<br />
+        ✔ Unions<br />
+        ✔ Tuples<br />
+        ✔ Functions<br />
+        ✔ Objects</p>
+
+      <p><strong>✅ Examples</strong></p>
+      <p>
+        <pre><code>{`type User = {
+  name: string;
+  age: number;
+};`}</code></pre>
+      </p>
+
+      <p><strong>✅ Union type</strong></p>
+      <p>
+        <pre><code>{`type Status = "active" | "inactive";`}</code></pre>
+      </p>
+
+      <p><strong>✅ Tuple</strong></p>
+      <p>
+        <pre><code>{`type Point = [number, number];`}</code></pre>
+      </p>
+
+      <p><strong>✅ Function type</strong></p>
+      <p>
+        <pre><code>{`type Add = (a: number, b: number) => number;`}</code></pre>
+      </p>
+
+      <p><strong>🔎 Extending Difference</strong></p>
+      <p><b>Interface</b></p>
+      <p>
+        <pre><code>{`interface A {
+  name: string;
+}
+
+interface B extends A {
+  age: number;
+}`}</code></pre>
+      </p>
+
+      <p>
+        <pre><code>{`type A = {
+  name: string;
+};
+
+type B = A & {
+  age: number;
+};`}</code></pre>
+      </p>
+
+      <h1>Optional props</h1>
+      <p><b>Optional props are props that are not required when using a component.
+
+        👉 Defined using ? in TypeScript</b></p>
+      <p>Optional props help design flexible components, but it's important to handle undefined values properly using default parameters or optional chaining to avoid runtime errors.</p>
+
+      <p><b>🔵 Basic Example</b></p>
+      <p>
+        <pre><code>{`interface Props {
+  name: string;
+  age?: number; // optional
+}`}</code></pre>
+      </p>
+
+      <p>
+        <pre><code>{`<p>{age.toFixed(2)}</p> // ❌ error`}</code></pre>
+        <pre><code>{`<p>{age?.toFixed(2)} || {age ? age.toFixed(2) : "N/A"}</p> //✅ Fix`}</code></pre>
+      </p>
+
+      <p><strong>✅ Using Default Parameters</strong></p>
+      <p>
+        <pre><code>{`function User({ name, age = 18 }: Props) {
+  return <p>{age}</p>;
+}`}</code></pre>
+      </p>
+
+      <p><strong>🔥 Optional Props with Functions</strong></p>
+      <p>
+        <pre><code>{`interface Props {
+  onClick?: () => void;
+}`}</code></pre>
+      </p>
+
+      <p><pre><code>{`onClick(); // might crash ❌ Wrong
+onClick?.();✅ Correct`}</code></pre></p>
+
+      <p><strong>🔥 Real-World Example (Your Use Case)</strong></p>
+      <p>For a reusable table component:</p>
+      <p><pre><code>{`interface TableProps {
+  data: any[];
+  loading?: boolean;
+  onRowClick?: (row: any) => void;
+}`}</code></pre></p>
+
+      <p><strong>🔥 Bonus: Partial Utility Type</strong></p>
+      <p><pre><code>{`type Props = {
+  name: string;
+  age: number;
+};
+
+type OptionalProps = Partial<Props>;`}</code></pre>👉 Makes all fields optional</p>
+      <p><b><q><pre><code>{`Partial<Props>`}</code></pre> automatically makes all properties optional, which means TypeScript treats them as T | undefined.
+        You do NOT need to manually add undefined.</q></b></p>
+
+      <h1>Typing event handlers</h1>
+      <p><b>In React with TypeScript, event handlers are typed using React’s synthetic event types like React.ChangeEvent, React.MouseEvent, etc.</b></p>
+      <p>I usually rely on TypeScript inference by writing inline handlers and then extracting the inferred type, which ensures accuracy and saves time.</p>
+
+      <h3>🔵 1️⃣ Input Change Event</h3>
+      <p>
+        <pre><code>{`const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  console.log(e.target.value);
+};`}</code></pre>
+      </p>
+
+      <h3>🔵 2️⃣ Button Click Event</h3>
+      <p>
+        <pre><code>{`const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  console.log("Clicked");
+};`}</code></pre>
+      </p>
+
+      <h3>🔵 3️⃣ Form Submit Event</h3>
+      <p>
+        <pre><code>{`const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+};`}</code></pre>
+      </p>
+
+      <h3>🔵 4️⃣ Select Dropdown Event</h3>
+      <p>
+        <pre><code>{`const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  console.log(e.target.value);
+};`}</code></pre>
+      </p>
+
+      <h3>🔵 5️⃣ Generic Event Handler (Reusable)</h3>
+      <p>
+        <pre><code>{`const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+) => {
+  console.log(e.target.value);
+};`}</code></pre>
+      </p>
     </div>
   );
 }
