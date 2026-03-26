@@ -1477,6 +1477,256 @@ type OptionalProps = Partial<Props>;`}</code></pre>👉 Makes all fields optiona
   console.log(e.target.value);
 };`}</code></pre>
       </p>
+
+      <h1>Real-world</h1>
+      <h1>How do you handle API errors?</h1>
+      <p><strong>I use try-catch blocks to handle API failures, maintain error and loading states, display user-friendly messages, and handle different HTTP status codes. For larger applications, I prefer centralized error handling using Axios interceptors or libraries like React Query.</strong></p>
+      <p><q>For server state, I prefer React Query due to built-in caching and syncing, but for complex global state and business logic, Redux Toolkit is more suitable.</q></p>
+
+      <h3>🔥 1️⃣ Basic Error Handling (try-catch)</h3>
+      <p>
+        <pre><code>{`const fetchData = async () => {
+  try {
+    const res = await fetch("/api/data");
+
+    if (!res.ok) {
+      throw new Error("API error");
+    }
+
+    const data = await res.json();
+    setData(data);
+
+  } catch (error) {
+    setError(error.message);
+  }
+};`}</code></pre>
+      </p>
+
+      <h3>🔥 2️⃣ Maintain Error State</h3>
+      <p>
+        <pre><code>{`const [data, setData] = useState([]);
+const [error, setError] = useState("");
+const [loading, setLoading] = useState(false);`}</code></pre>
+      </p>
+
+      <h3>🔥 3️⃣ Show User-Friendly UI</h3>
+      <p>
+        <pre><code>{`if (loading) return <p>Loading...</p>;
+if (error) return <p>Error: {error}</p>;`}</code></pre>
+      </p>
+
+      <h3>🔥 4️⃣ Handle HTTP Status Codes</h3>
+      <p>
+        <pre><code>{`if (res.status === 404) {
+  throw new Error("Data not found");
+}
+
+if (res.status === 500) {
+  throw new Error("Server error");
+}`}</code></pre>
+      </p>
+
+      <h3>🔥 5️⃣ Axios Example (Very Common)</h3>
+      <p>
+        <pre><code>{`try {
+  const res = await axios.get("/api/data");
+  setData(res.data);
+} catch (error) {
+  if (error.response) {
+    // Server responded with error
+    setError(error.response.data.message);
+  } else if (error.request) {
+    // No response
+    setError("Network error");
+  } else {
+    setError("Unexpected error");
+  }
+}`}</code></pre>
+      </p>
+
+      <h3>🔥 6️⃣ Centralized Error Handling (Best Practice)</h3>
+      <p>Create a reusable API utility:</p>
+      <p>
+        <pre><code>{`export const fetchApi = async (url: string) => {
+  try {
+    const res = await fetch(url);
+
+    if (!res.ok) throw new Error("API failed");
+
+    return await res.json();
+  } catch (error) {
+    throw error;
+  }
+};`}</code></pre>
+      </p>
+
+      <h3>🔥 7️⃣ Global Error Handling</h3>
+      <p>Use: <ul>
+        <li>Axios interceptors</li>
+        <li>React Error Boundaries (for UI errors)</li>
+      </ul></p>
+
+      <p>
+        <pre><code>{`axios.interceptors.response.use(
+  response => response,
+  error => {
+    console.error(error);
+    return Promise.reject(error);
+  }
+);`}</code></pre>
+      </p>
+
+      <h3>🔥 8️⃣ Retry & Fallback (Advanced)</h3>
+      <p>
+        <pre><code>{`const fetchWithRetry = async (retry = 3) => {
+  try {
+    return await fetchData();
+  } catch (err) {
+    if (retry > 0) {
+      return fetchWithRetry(retry - 1);
+    }
+    throw err;
+  }
+};`}</code></pre>
+      </p>
+
+      <h3>🔥 9️⃣ Real-World Enhancements</h3>
+      <p>
+        <pre><code>{`✔ Show toast notifications
+✔ Log errors (Sentry, LogRocket)
+✔ Retry failed requests
+✔ Graceful fallback UI`}</code></pre>
+      </p>
+
+      <h1>How do you structure a large React app?</h1>
+      <p>In large React applications, I prefer a feature-based folder structure where each module contains its components, hooks, API logic, and state. I separate UI, business logic, and data layers, use reusable components for shared UI, and manage state using tools like Redux Toolkit or React Query depending on the complexity. This approach improves scalability, maintainability, and team collaboration.</p>
+
+      <h3>🔹 1️⃣ Recommended Folder Structure (Feature-Based)</h3>
+      <p>Instead of grouping by type (components, hooks, etc.), group by feature/module.</p>
+      <p>
+        <pre><code>{`src/
+ ├── app/                # App setup (store, providers)
+ ├── features/           # Business logic (core modules)
+ │    ├── users/
+ │    │    ├── components/
+ │    │    ├── userSlice.ts
+ │    │    ├── userAPI.ts
+ │    │    ├── types.ts
+ │    │
+ │    ├── auth/
+ │    ├── dashboard/
+ │
+ ├── components/         # Reusable UI (Button, Modal)
+ ├── hooks/              # Custom hooks
+ ├── services/           # API layer
+ ├── utils/              # Helpers
+ ├── types/              # Global types
+ ├── routes/             # Routing config
+ ├── assets/             # Images, icons
+ ├── styles/             # Global styles
+ └── App.tsx`}</code></pre>
+      </p>
+
+      <h3>🔥 Why Feature-Based?</h3>
+      <p>
+        <pre><code>{`✔ Better scalability
+✔ Easier to maintain
+✔ Clear separation of concerns
+✔ Teams can work independently`}</code></pre>
+      </p>
+
+      <h3>🔹 2️⃣ Inside a Feature (Example: Users)</h3>
+      <p>
+        <pre><code>{`features/users/
+ ├── components/
+ │    ├── UserTable.tsx
+ │    ├── UserFilter.tsx
+ │
+ ├── hooks/
+ │    ├── useUsers.ts
+ │
+ ├── userAPI.ts
+ ├── userSlice.ts
+ ├── types.ts`}</code></pre>
+        👉 Everything related to "users" stays together
+      </p>
+
+      <h3>🔹 3️⃣ Separation of Concerns</h3>
+      <p>
+        <pre><code>{`🧩 UI Layer
+. Components
+. Presentational logic
+⚙️ Logic Layer
+. Hooks (useUsers)
+. State (Redux / Context)
+🌐 Data Layer
+. API calls (userAPI.ts)`}</code></pre>
+      </p>
+
+      <h3>🔹 4️⃣ API Layer Structure</h3>
+      <p>
+        <pre><code>{`// services/api.ts
+export const api = axios.create({
+  baseURL: "/api",
+});`}</code></pre>
+      </p>
+
+      <p>
+        <pre><code>{`// features/users/userAPI.ts
+export const getUsers = () => api.get("/users");`}</code></pre>
+      </p>
+
+      <h3>🔹 5️⃣ State Management Strategy</h3>
+      <p>
+        <pre><code>{`. Local state → useState
+. Shared state → Context
+. Complex/global → Redux Toolkit / Zustand
+. Server state → React Query`}</code></pre>
+      </p>
+
+      <h3>🔹 6️⃣ Reusable Components</h3>
+      <p>
+        <pre><code>{`components/
+ ├── Button/
+ ├── Input/
+ ├── Modal/`}</code></pre>
+        👉 Pure UI (no business logic)
+      </p>
+
+      <h3>🔹 7️⃣ Custom Hooks</h3>
+      <p>
+        <pre><code>{`hooks/
+ ├── useDebounce.ts
+ ├── useAuth.ts`}</code></pre>👉 Reusable logic
+      </p>
+
+      <h3>🔹 8️⃣ Routing Structure</h3>
+      <p>
+        <pre><code>{`routes/
+ ├── AppRoutes.tsx
+ ├── PrivateRoute.tsx`}</code></pre>
+      </p>
+
+      <h3>🔹 9️⃣ Environment & Config</h3>
+      <p>
+        <pre><code>{`config/
+ ├── env.ts
+ ├── constants.ts`}</code></pre>
+      </p>
+
+      <h3>🔥 🔟 Performance & Scaling Considerations</h3>
+      <p>
+        <pre><code>{`✔ Code splitting (React.lazy)
+✔ Lazy loading routes
+✔ Memoization
+✔ API caching (React Query)
+✔ Modular architecture`}</code></pre>
+      </p>
+
+      <h1>How do you handle role-based UI?</h1>
+      <p>I handle role-based UI by storing the user role (from auth) and conditionally rendering components, routes, and actions based on permissions.</p>
+      <p>I implement role-based UI by storing the user's role or permissions and conditionally rendering components, routes, and actions. I prefer a permission-based approach for flexibility, and I centralize role logic using hooks or config files. I also ensure backend validation for security.</p>
+      <p>I avoid scattering role checks across components and instead centralize permission logic using hooks or utility functions for maintainability and scalability.</p>
     </div>
   );
 }
