@@ -6,7 +6,6 @@ function ReactJsQs() {
   return (
     <div style={{ padding: "2rem" }} className='react-qs'>
       <h2>ReactJs Interview Questions</h2>
-
       <h1>1.How does React reconciliation work under the hood?</h1>
 
       <p>React reconciliation is the process that React uses to decide what actually needs to change in the DOM when a component’s state or props update. Since updating the real DOM is expensive, React uses a virtual representation to update only what’s necessary — not the whole page.</p>
@@ -718,707 +717,6 @@ export default function UserDashboard({ users }) {
         <li>✔ Performance-critical screens</li>
       </ul>
 
-      <h1>Core React</h1>
-      <h1>Difference between state and props</h1>
-      <p>Props are read-only data passed from parent to child components, while state is mutable data managed within a component that controls its behavior and re-rendering.</p>
-      <p>
-        <pre>
-          <code>
-            {`| Feature           | Props                        | State                    |
-| ----------------- | ---------------------------- | ------------------------ |
-| Ownership         | Passed from parent           | Managed inside component |
-| Mutability        | Read-only                    | Can be updated           |
-| Purpose           | Configuration / Data passing | Dynamic behavior         |
-| Who updates it?   | Parent component             | Component itself         |
-| Causes re-render? | Yes (if value changes)       | Yes (when updated)       |
-`}
-          </code>
-        </pre>
-      </p>
-      <p>👉 Props = Input to a component, immutable</p>
-      <p>👉 State = Component’s internal data Is mutable (can be changed)</p>
-      <h3>Using props</h3>
-      <p>
-        <pre>
-          <code>{`function Child(props) {
-  return <h1>Hello {props.name}</h1>;
-}
-
-function Parent() {
-  return <Child name="HimaBindu" />;
-}
-`}</code>
-        </pre>
-      </p>
-
-      <h3>Using props</h3>
-      <p>
-        <pre><code>
-          {`import { useState } from "react";
-
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <h1>{count}</h1>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-    </>
-  );
-}
-`}
-        </code></pre>
-      </p>
-      <h1>What is useEffect?</h1>
-      <p>useEffect is a React Hook used to handle side effects in functional components.</p>
-      <p>👉 Side effects = things that happen outside normal rendering:</p>
-      <p>useEffect is a hook that runs side effects after the component renders, and its execution depends on the dependency array.</p>
-      <p>API calls, Subscriptions, Timers, DOM manipulation, Event listeners</p>
-      <p><strong>Basic Syntax</strong></p>
-      <p>
-        <pre>
-          <code>{`useEffect(() => {
-  // Side effect logic
-
-  return () => {
-    // Cleanup (optional)
-  };
-}, [dependencies]);
-`}</code>
-        </pre>
-      </p>
-      <p><strong>🔹How useEffect Works (Step-by-Step)</strong></p>
-      <p>1️⃣ Component renders<br />
-        2️⃣ React updates the DOM<br />
-        3️⃣ Then useEffect runs<br />
-        4️⃣ If dependencies change → effect runs again<br />
-        5️⃣ If component unmounts → cleanup runs<br />
-
-        👉 Important: useEffect runs after render</p>
-
-      <p>✔ It replaces lifecycle methods:</p>
-      <ul>
-        <li>componentDidMount</li>
-        <li>componentDidUpdate</li>
-        <li>componentWillUnmount</li>
-      </ul>
-
-      <h1>Dependency array mistakes.</h1>
-      <p>Common mistakes include missing dependencies leading to stale closures, causing infinite loops by updating state inside effects, using objects or functions without memoization, and ignoring ESLint warnings.</p>
-      <p>🧠 Senior-Level Insight</p>
-      <ol>
-        <li>Dependency array uses referential equality (Object.is)</li>
-        <li>Functions and objects cause re-renders unless memoized</li>
-        <li>Stale closures are the most dangerous bug</li>
-        <li>Effects should be used for side effects only — not data derivation</li>
-      </ol>
-
-      <h1>Controlled vs uncontrolled components.</h1>
-      <p>Controlled components are managed by React state, while uncontrolled components store their own state in the DOM and are accessed using refs.</p>
-      <h3>🔵 1️⃣ Controlled Components</h3>
-      <p>A controlled component is a form element whose value is controlled by React state.</p>
-      <p><strong>✅ Example (Controlled)</strong></p>
-      <p>
-        <pre>
-          <code>{`import { useState } from "react";
-
-function Form() {
-  const [name, setName] = useState("");
-
-  return (
-    <input
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-    />
-  );
-}
-`}</code>
-        </pre>
-      </p>
-      <p><strong>🔎 What’s happening?</strong></p>
-      <ul>
-        <li>Input value comes from name state</li>
-        <li>On every change → state updates</li>
-        <li>UI always reflects React state</li>
-      </ul>
-      <p>✔ Predictable<br />
-        ✔ Easy validation<br />
-        ✔ Better for dynamic forms</p>
-
-      <h3>🔴 2️⃣ Uncontrolled Components</h3>
-      <p>An uncontrolled component stores its own state in the DOM.</p>
-      <p><strong>✅ Example (Uncontrolled)</strong></p>
-      <p>
-        <pre>
-          <code>{`import { useRef } from "react";
-
-function Form() {
-  const inputRef = useRef();
-
-  const handleSubmit = () => {
-    console.log(inputRef.current.value);
-  };
-
-  return (
-    <>
-      <input ref={inputRef} />
-      <button onClick={handleSubmit}>Submit</button>
-    </>
-  );
-}
-`}</code>
-        </pre>
-      </p>
-      <p><strong>🔎 What’s happening?</strong></p>
-      <ul>
-        <li>Input manages its own value</li>
-        <li>We read value only when needed</li>
-        <li>React does not control it</li>
-        <p>✔ Less code<br />
-          ✔ Slightly better performance in large forms<br />
-          ❌ Harder validation</p>
-      </ul>
-
-      <h3>🔥 Key Differences (Interview Table)</h3>
-      <p>
-        <pre>
-          <code>{`| Feature             | Controlled         | Uncontrolled |
-| ------------------- | ------------------ | ------------ |
-| Data Source         | React state        | DOM          |
-| Value Access        | via state          | via ref      |
-| Re-render on change | Yes                | No           |
-| Validation          | Easy               | Manual       |
-| Recommended?        | ✅ Yes (most cases) | Rare cases   |
-`}</code>
-        </pre>
-      </p>
-
-      <h1>Lifting state up.</h1>
-      <p>Lifting state up is the process of moving state to the nearest common parent so that multiple components can share and stay synchronized with the same data.</p>
-      <p>React follows:<br />
-
-        🔁 Unidirectional Data Flow (Top → Down)<br /><br />
-
-        If two sibling components need the same data:<br />
-
-        <ul>
-          <li>They cannot directly share state</li>
-          <li>So we move state to their parent</li>
-        </ul>
-        That process is called lifting state up.</p>
-
-      <h3>🔹 Example Without Lifting (Problem)</h3>
-      <p>
-        <pre>
-          <code>{`function ChildA() {
-  const [count, setCount] = useState(0);
-  return <button onClick={() => setCount(count + 1)}>+</button>;
-}
-
-function ChildB() {
-  return <p>Count: ???</p>;
-}
-`}</code>
-        </pre>
-      </p>
-      <p>👉 ChildB cannot access ChildA's state<br />
-        👉 No shared data</p>
-
-      <h3>🔹 Example With Lifting State Up (Correct)</h3>
-      <p>
-        <pre>
-          <code>{`import { useState } from "react";
-
-function Parent() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <ChildA count={count} setCount={setCount} />
-      <ChildB count={count} />
-    </>
-  );
-}
-
-function ChildA({ count, setCount }) {
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Increment
-    </button>
-  );
-}
-
-function ChildB({ count }) {
-  return <p>Count: {count}</p>;
-}
-`}</code>
-        </pre>
-      </p>
-      <p><strong>🔎 What Happened?</strong></p>
-      <p>
-        1️⃣ State moved to Parent<br />
-        2️⃣ Passed as props to children<br />
-        3️⃣ One child updates<br />
-        4️⃣ Other child reflects changes<br />
-
-        ✔ Single source of truth<br />
-        ✔ Predictable data flow
-
-      </p>
-
-      <p><strong>🎯 Real Interview Scenario</strong></p>
-      <p>
-        <b>Interviewer might ask:</b></p>
-      <p>
-        If two distant components need the same state, would you always lift it up?</p>
-      <p><b>Best answer:</b></p>
-      <p>
-        "If they share a close parent, yes. If not, I would consider Context API or a global state solution to avoid prop drilling."</p>
-
-      <p><strong>❓ What problem does lifting state up solve?</strong></p>
-      <p>👉 It prevents duplicated state and inconsistency between components.</p>
-
-      <h3>Real-world example (like filters + table sync)s</h3>
-      <p><strong>🧩 Problem Statement</strong><br />
-
-        You have:<br />
-
-        🔍 A Filter Component (search, status dropdown, date range)<br />
-
-        📊 A Table Component (displays filtered data)<br />
-
-        Both need to stay synchronized.</p>
-
-      <p><strong>❌ Wrong Approach (State Inside Filter Only)</strong></p>
-      <p>
-        <pre>
-          <code>{`function Filter() {
-  const [search, setSearch] = useState("");
-
-  return <input onChange={(e) => setSearch(e.target.value)} />;
-}
-
-function Table() {
-  // No access to search value ❌
-}
-`}</code>
-        </pre>
-      </p>
-      <p>👉 Table cannot access filter state<br />
-        👉 No synchronization<br />
-        👉 Duplicate state may appear</p>
-
-      <p><strong>✅ Correct Approach: Lift State to Parent</strong></p>
-      <p>
-        <pre>
-          <code>{`Parent (Holds State)
-   ├── Filter (Updates State)
-   └── Table (Reads State)
-`}</code>
-        </pre>
-      </p>
-
-      <p><strong>💻 Example</strong></p>
-
-      <p><strong>Parent component</strong></p>
-
-      <p><pre>
-        <code>{`import { useState, useMemo } from "react";
-
-function Parent() {
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all");
-
-  const data = [
-    { id: 1, name: "Hima", status: "active" },
-    { id: 2, name: "John", status: "inactive" },
-  ];
-
-  const filteredData = useMemo(() => {
-    return data.filter(item => {
-      const matchesSearch = item.name
-        .toLowerCase()
-        .includes(search.toLowerCase());
-
-      const matchesStatus =
-        status === "all" || item.status === status;
-
-      return matchesSearch && matchesStatus;
-    });
-  }, [search, status]);
-
-  return (
-    <>
-      <Filter
-        search={search}
-        setSearch={setSearch}
-        status={status}
-        setStatus={setStatus}
-      />
-      <Table data={filteredData} />
-    </>
-  );
-}
-`}</code></pre></p>
-
-      <p><strong>Filter component</strong></p>
-      <p>
-        <pre>
-          <code>{`function Filter({ search, setSearch, status, setStatus }) {
-  return (
-    <>
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search..."
-      />
-
-      <select
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-      >
-        <option value="all">All</option>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-      </select>
-    </>
-  );
-}
-`}</code>
-        </pre>
-      </p>
-
-      <p><strong>Table component</strong></p>
-      <p>
-        <pre>
-          <code>{`function Table({ data }) {
-  return (
-    <table>
-      <tbody>
-        {data.map(item => (
-          <tr key={item.id}>
-            <td>{item.name}</td>
-            <td>{item.status}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
-`}</code>
-        </pre>
-      </p>
-
-      <p><strong>
-        🔎 What’s Happening?</strong><br />
-
-        ✔ Parent holds filter state<br />
-        ✔ Filter updates state<br />
-        ✔ Table reads filtered data<br />
-        ✔ useMemo optimizes recalculation</p>
-
-      <p>
-        <strong>🔥 Why This Is Important in Interviews</strong><br />
-
-        This demonstrates:
-
-        <ul>
-          <li>Lifting state up</li>
-          <li>Single source of truth</li>
-          <li>Controlled components</li>
-          <li>Performance optimization</li>
-          <li>Proper data flow</li>
-        </ul>
-      </p>
-
-      <p><strong>🧠 Senior-Level Enhancement</strong><br />
-
-        In real applications:<br />
-
-        <b>🔹 If data comes from API</b><br />
-
-        You might:</p>
-
-      <p>
-        <pre>
-          <code>{`useEffect(() => {
-  fetchData(search, status);
-}, [search, status]);
-`}</code>
-        </pre>
-        Instead of filtering locally.
-      </p>
-
-      <p><strong>🔹 If filters become complex</strong><br />
-
-        Consider:
-        <ul>
-          <li>Debouncing search</li>
-          <li>Memoizing filter logic</li>
-          <li>Using React Query for server filtering</li>
-          <li>Using Zustand/Redux if filters are global</li>
-        </ul>
-      </p>
-
-      <h1>Advanced</h1>
-      <h1>useMemo vs useCallback</h1>
-      <p>useMemo memoizes a value, while useCallback memoizes a function.</p>
-
-      <h1>Keys in lists</h1>
-      <p><strong>Keys are special attributes used to identify elements in a list.</strong></p>
-      <p>
-        <pre>
-          <code>{`{items.map((item) => (
-  <input key={item.id} defaultValue={item.name} />
-))}`}</code>
-        </pre>
-      </p>
-      <p><q>Using stable and unique keys ensures React performs minimal DOM updates and preserves component state correctly across renders.</q></p>
-
-      <h1>Context API vs Redux</h1>
-      <p><strong>Context API is ideal for lightweight global state, but for complex applications with frequent updates and debugging needs, Redux provides better performance optimization, structured state management, and tooling support.</strong></p>
-      <h3>🔵 1️⃣ Context API</h3>
-      <p>🔹 What it is:
-        <br />
-        A React feature to share data across components without prop drilling.</p>
-
-      <p><strong>
-
-        ✅ Example</strong></p>
-      <p>
-        <pre>
-          <code>{`const ThemeContext = React.createContext();
-
-function App() {
-  const [theme, setTheme] = useState("light");
-
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      <Child />
-    </ThemeContext.Provider>
-  );
-}`}</code>
-        </pre>
-      </p>
-
-      <p><strong>🔹 Best For:</strong></p>
-      <p>
-        <ul>
-          <li>Theme (dark/light)</li>
-          <li>Auth user data</li>
-          <li>Language (i18n)</li>
-          <li>Small/global state</li>
-        </ul>
-      </p>
-      <p><strong>❗ Limitation:</strong></p>
-      <p><ul>
-        <li>Causes re-render of all consumers when value changes</li>
-        <li>No built-in structure (reducers, middleware, etc.)</li>
-        <li>Hard to scale for complex apps</li>
-      </ul>
-      </p>
-
-      <h3>🔴 2️⃣ Redux</h3>
-      <p><strong>🔹 What it is:</strong></p>
-      <p>A state management library with a predictable data flow.</p>
-      <p><strong>🔹 Core Concepts:</strong></p>
-      <p><ul>
-        <li>Store</li>
-        <li>Actions</li>
-        <li>Reducers</li>
-        <li>Dispatch</li>
-      </ul></p>
-
-      <p><strong>✅ Example (Redux Toolkit style)</strong></p>
-      <p>
-        <pre><code>{`const counterSlice = createSlice({
-  name: "counter",
-  initialState: { value: 0 },
-  reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-  },
-});`}</code></pre>
-      </p>
-
-      <p><strong>🔹 Best For:</strong></p>
-      <p>
-        <ul><li>Large applications</li>
-          <li>Complex state logic</li>
-          <li>Multiple unrelated global states</li>
-          <li>Debugging & tracking changes</li></ul>
-      </p>
-
-      <p><strong>🔥 Advantages:</strong></p>
-
-      <p>
-        <ul>
-          <li>✔ Predictable state updates</li>
-          <li>✔ Middleware support (API calls, logging)</li>
-          <li>✔ DevTools (time travel debugging)</li>
-          <li>✔ Better scalability</li>
-        </ul>
-      </p>
-
-      <p><strong>🔎 Performance Difference (Important)</strong></p>
-      <p><b>Context API:</b></p>
-      <p>
-        <pre><code>{`value={{ user }}`}</code></pre>
-      </p>
-      <p>👉 When user changes → ALL consumers re-render</p>
-      <p><b>Redux:</b></p>
-      <p>👉 Only components using changed state re-render<br />
-        👉 Uses selectors for optimization</p>
-
-      <h1>How to optimize performance</h1>
-      <p><strong>🎯 Real-World Example (Your Use Case)</strong></p>
-      <p>For a large table with filters:</p>
-      <p>
-        <ul>
-          <li>✔ useMemo → filter data</li>
-          <li>✔ useCallback → row handlers</li>
-          <li>✔ React.memo → row components</li>
-          <li>✔ Virtualization → render only visible rows</li>
-          <li>✔ Debounce → search input</li>
-        </ul>
-      </p>
-      <p><b>To optimize React performance, I focus on minimizing unnecessary re-renders using React.memo, useMemo, and useCallback, optimizing state structure, using proper keys, debouncing expensive operations like API calls, and applying techniques like code splitting and list virtualization for large datasets.</b></p>
-
-      <h1>TypeScript</h1>
-      <h1>interface vs type</h1>
-      <p><strong>interface is mainly used for defining object shapes, while type is more flexible and can represent any type (primitives, unions, tuples, etc.)</strong></p>
-
-      <p><strong>🔵 1️⃣ Interface</strong></p>
-      <p>🔹 Used for:<br />
-
-        ✔ Defining object structure<br />
-
-        ✔ Extending other interfaces<br />
-
-        ✔ Class implementation</p>
-
-      <p><strong>✅ Example</strong></p>
-      <p>
-        <pre><code>{`interface User {
-  name: string;
-  age: number;
-}`}</code></pre>
-      </p>
-
-      <p><strong>🔹 Extending Interface</strong></p>
-      <p>
-        <pre><code>{`interface Employee extends User {
-  role: string;
-}`}</code></pre>
-      </p>
-
-      <p><strong>🔹 Declaration Merging (Important)</strong></p>
-      <p>
-        <pre><code>{`interface User {
-  name: string;
-}
-
-interface User {
-  age: number;
-}`}</code></pre>
-      </p>
-      <p>👉 Automatically merged:</p>
-      <p>
-        <pre><code>{`// { name: string; age: number }`}</code></pre>
-      </p>
-
-      <p><strong>🟢 2️⃣ Type</strong></p>
-      <p>🔹 More flexible:</p>
-      <p>Can define:<br />
-
-        ✔ Primitives<br />
-        ✔ Unions<br />
-        ✔ Tuples<br />
-        ✔ Functions<br />
-        ✔ Objects</p>
-
-      <p><strong>✅ Examples</strong></p>
-      <p>
-        <pre><code>{`type User = {
-  name: string;
-  age: number;
-};`}</code></pre>
-      </p>
-
-      <p><strong>✅ Union type</strong></p>
-      <p>
-        <pre><code>{`type Status = "active" | "inactive";`}</code></pre>
-      </p>
-
-      <p><strong>✅ Tuple</strong></p>
-      <p>
-        <pre><code>{`type Point = [number, number];`}</code></pre>
-      </p>
-
-      <p><strong>✅ Function type</strong></p>
-      <p>
-        <pre><code>{`type Add = (a: number, b: number) => number;`}</code></pre>
-      </p>
-
-      <p><strong>🔎 Extending Difference</strong></p>
-      <p><b>Interface</b></p>
-      <p>
-        <pre><code>{`interface A {
-  name: string;
-}
-
-interface B extends A {
-  age: number;
-}`}</code></pre>
-      </p>
-
-      <p>
-        <pre><code>{`type A = {
-  name: string;
-};
-
-type B = A & {
-  age: number;
-};`}</code></pre>
-      </p>
-
-      <h1>Optional props</h1>
-      <p><b>Optional props are props that are not required when using a component.
-
-        👉 Defined using ? in TypeScript</b></p>
-      <p>Optional props help design flexible components, but it's important to handle undefined values properly using default parameters or optional chaining to avoid runtime errors.</p>
-
-      <p><b>🔵 Basic Example</b></p>
-      <p>
-        <pre><code>{`interface Props {
-  name: string;
-  age?: number; // optional
-}`}</code></pre>
-      </p>
-
-      <p>
-        <pre><code>{`<p>{age.toFixed(2)}</p> // ❌ error`}</code></pre>
-        <pre><code>{`<p>{age?.toFixed(2)} || {age ? age.toFixed(2) : "N/A"}</p> //✅ Fix`}</code></pre>
-      </p>
-
-      <p><strong>✅ Using Default Parameters</strong></p>
-      <p>
-        <pre><code>{`function User({ name, age = 18 }: Props) {
-  return <p>{age}</p>;
-}`}</code></pre>
-      </p>
-
-      <p><strong>🔥 Optional Props with Functions</strong></p>
-      <p>
-        <pre><code>{`interface Props {
-  onClick?: () => void;
-}`}</code></pre>
-      </p>
-
-      <p><pre><code>{`onClick(); // might crash ❌ Wrong
-onClick?.();✅ Correct`}</code></pre></p>
-
       <p><strong>🔥 Real-World Example (Your Use Case)</strong></p>
       <p>For a reusable table component:</p>
       <p><pre><code>{`interface TableProps {
@@ -1436,47 +734,6 @@ onClick?.();✅ Correct`}</code></pre></p>
 type OptionalProps = Partial<Props>;`}</code></pre>👉 Makes all fields optional</p>
       <p><b><q><pre><code>{`Partial<Props>`}</code></pre> automatically makes all properties optional, which means TypeScript treats them as T | undefined.
         You do NOT need to manually add undefined.</q></b></p>
-
-      <h1>Typing event handlers</h1>
-      <p><b>In React with TypeScript, event handlers are typed using React’s synthetic event types like React.ChangeEvent, React.MouseEvent, etc.</b></p>
-      <p>I usually rely on TypeScript inference by writing inline handlers and then extracting the inferred type, which ensures accuracy and saves time.</p>
-
-      <h3>🔵 1️⃣ Input Change Event</h3>
-      <p>
-        <pre><code>{`const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  console.log(e.target.value);
-};`}</code></pre>
-      </p>
-
-      <h3>🔵 2️⃣ Button Click Event</h3>
-      <p>
-        <pre><code>{`const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  console.log("Clicked");
-};`}</code></pre>
-      </p>
-
-      <h3>🔵 3️⃣ Form Submit Event</h3>
-      <p>
-        <pre><code>{`const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-};`}</code></pre>
-      </p>
-
-      <h3>🔵 4️⃣ Select Dropdown Event</h3>
-      <p>
-        <pre><code>{`const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  console.log(e.target.value);
-};`}</code></pre>
-      </p>
-
-      <h3>🔵 5️⃣ Generic Event Handler (Reusable)</h3>
-      <p>
-        <pre><code>{`const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-) => {
-  console.log(e.target.value);
-};`}</code></pre>
-      </p>
 
       <h1>Real-world</h1>
       <h1>How do you handle API errors?</h1>
@@ -1727,6 +984,135 @@ export const getUsers = () => api.get("/users");`}</code></pre>
       <p>I handle role-based UI by storing the user role (from auth) and conditionally rendering components, routes, and actions based on permissions.</p>
       <p>I implement role-based UI by storing the user's role or permissions and conditionally rendering components, routes, and actions. I prefer a permission-based approach for flexibility, and I centralize role logic using hooks or config files. I also ensure backend validation for security.</p>
       <p>I avoid scattering role checks across components and instead centralize permission logic using hooks or utility functions for maintainability and scalability.</p>
+
+      <h3>🔹 1️⃣ Basic Idea</h3>
+      <p>You get user data from:</p>
+      <p>
+        <pre><code>{`Login API
+WT token
+Global state (Redux / Context)`}</code><br /><br />
+
+          <code>{`const user = {
+  name: "Hima",
+  role: "admin", // or 'user', 'manager'
+};`}</code></pre>
+      </p>
+
+      <h3>🔥 2️⃣ Conditional Rendering (Basic)</h3>
+      <p>
+        <pre><code>{`{user.role === "admin" && <AdminPanel />}`}</code></pre>
+      </p>
+
+      <h3>🔹 3️⃣ Role-Based Button Access</h3>
+      <p>
+        <pre><code>{`<button disabled={user.role !== "admin"}>
+  Delete User
+</button>`}</code></pre>
+      </p>
+
+      <h3>🔥 4️⃣ Centralized Role Config (Best Practice)</h3>
+      <p>
+        Avoid hardcoding roles everywhere ❌ <br />
+        <pre><code>{`const roles = {
+  ADMIN: "admin",
+  USER: "user",
+};`}</code></pre>
+      </p>
+
+      <h3>🔥 5️⃣ Permission-Based Approach (Better than Roles)</h3>
+      <p>
+        Instead of roles → use permissions <br /><br />
+        <pre><code>{`const permissions = {
+  admin: ["read", "write", "delete"],
+  user: ["read"],
+};`}</code></pre></p>
+
+      <p><pre><code>{`const canDelete = permissions[user.role].includes("delete");
+{canDelete && <DeleteButton />}`}</code></pre></p>
+
+      <h3>🔹 6️⃣ Protected Routes</h3>
+      <p>
+        <pre><code>{`function PrivateRoute({ children, allowedRoles }) {
+  const user = useAuth();
+
+  if (!allowedRoles.includes(user.role)) {
+    return <p>Access Denied</p>;
+  }
+
+  return children;
+}`}</code></pre>
+      </p>
+
+      <h3>✅ Usage</h3>
+      <p>
+        <pre><code>{`<PrivateRoute allowedRoles={["admin"]}>
+  <AdminPage />
+</PrivateRoute>`}</code></pre>
+      </p>
+
+      <h3>🔥 7️⃣ Reusable Hook (Clean Approach)</h3>
+      <p>
+        <pre><code>{`const usePermission = () => {
+  const user = useAuth();
+
+  const hasPermission = (action: string) => {
+    return permissions[user.role]?.includes(action);
+  };
+
+  return { hasPermission };
+};`}</code></pre>
+      </p>
+
+      <h3>✅ Usage</h3>
+      <p>
+        <pre><code>{`const { hasPermission } = usePermission();
+
+{hasPermission("delete") && <DeleteButton />}`}</code></pre>
+      </p>
+
+      <h3>🔥 8️⃣ UI + API Security (Important)</h3>
+      <p>
+        👉 UI restriction is NOT enough ❌<br />Always:
+        <pre><code>{`.Validate roles on backend
+.Secure APIs`}</code></pre>
+      </p>
+
+      <h3>🔥 9️⃣ Real-World Example (Your Case)</h3>
+      <p>For a table:</p>
+      <p>
+        <pre><code>{`{hasPermission("edit") && <EditButton />}
+{hasPermission("delete") && <DeleteButton />}`}</code></pre>
+      </p>
+      <p>👉 Different users see different actions</p>
+
+      <h3>🔥 🔟 Menu / Sidebar Control</h3>
+      <p>
+        <pre><code>{`const menuItems = [
+  { label: "Dashboard", roles: ["admin", "user"] },
+  { label: "Admin Panel", roles: ["admin"] },
+];`}</code></pre>
+      </p>
+
+      <p>
+        <pre><code>{`menuItems
+  .filter(item => item.roles.includes("user"))
+  .map(item => <MenuItem key={item.label} {...item} />);`}</code></pre>
+      </p>
+
+      <h3>🧠 Advanced (Senior-Level)</h3>
+      <p>
+        <ul>
+          <li>Use RBAC (Role-Based Access Control)</li>
+          <li>Prefer Permission-Based (PBAC) for flexibility</li>
+          <li>Store auth in:
+            <ul>
+              <li>Context</li>
+              <li>Redux</li>
+            </ul>
+          </li>
+          <li>Cache user role (avoid repeated API calls)</li>
+        </ul>
+      </p>
     </div>
   );
 }

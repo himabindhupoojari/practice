@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, HashRouter, Link, Route, Routes } from "react-router-dom";
-// import "./App.css";
+import "./App.css";
 import Component1 from "./components/Component1";
 import Component2 from "./components/Component2";
 import CreateContextApiReact from "./components/Create Context/CreateContextApiReact";
@@ -19,8 +19,13 @@ import ThemeSwitcher from "./components/ThemeBuilder/ThemeSwitcher";
 import Easy from "./InterviewPanel/easy/easy";
 import ReactJsQs from "./InterviewPanel/ReactJsQs";
 import JsQs from "./InterviewPanel/JsQs";
+import ReactCoreQuestions from "./InterviewPanel/ReactCoreQuestions";
+import ReactAdvanced from "./InterviewPanel/ReactAdvanced";
+import TypescriptReact from "./InterviewPanel/TypescriptReact";
+
 
 function App() {
+ 
   return (
     <HashRouter>
       <div style={{ display: "inline-flex", columnGap: 20 }}>
@@ -39,6 +44,9 @@ function App() {
         <Link to="interview-easy">Interview Easy</Link> */}
         <Link to="/">React Js Q&As</Link>
         <Link to="js-qs">Js Q&As</Link>
+        <Link to="core-react">Core React</Link>
+        <Link to="advanced-react">Advanced React</Link>
+        <Link to="typescript">Typescript</Link>
       </div>
       <Routes>
         {/* <Route path="/" element={<Component1 />} /> */}
@@ -58,10 +66,23 @@ function App() {
         <Route path="ts" element={<ThemeSwitcher />} />
         <Route path="interview-easy" element={<Easy />} />
         {/* <Route path="reactjs-qs" element={<ReactJsQs />} /> */}
-        <Route path="js-qs" element={<JsQs />} />        
+        <Route path="js-qs" element={<JsQs />} /> 
+        <Route path="core-react" element={<ReactCoreQuestions />}/>
+        <Route path="advanced-react" element={<ReactAdvanced />}/>
+        <Route path="typescript" element={<TypescriptReact />}/>
       </Routes>
     </HashRouter>
   );
 }
 
 export default App;
+
+// {/* Parent Route */}
+//     <Route path="react-qs" element={<ReactJsQs />}>
+      
+//       {/* Child Routes */}
+//       <Route path="easy" element={<Easy />} />
+//       <Route path="medium" element={<h3>Medium Questions</h3>} />
+//       <Route path="hard" element={<h3>Hard Questions</h3>} />
+
+//     </Route>
