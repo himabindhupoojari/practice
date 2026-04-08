@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './style.css';
 
 function TypescriptReact() {
+const [data, setdata] = useState<number>(0);
   return (
     <div className='react-qs'>
         <h1>TypeScript</h1>
