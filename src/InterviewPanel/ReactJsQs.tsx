@@ -980,6 +980,564 @@ export const getUsers = () => api.get("/users");`}</code></pre>
 ✔ Modular architecture`}</code></pre>
       </p>
 
+      <p><pre><code>{`Skip to content
+DEV Community
+Find related posts...
+Powered by Algolia 
+Log in
+Create account
+
+19
+Jump to Comments
+
+247
+Save
+
+Boost
+
+Cover image for Recommended Folder Structure for React 2025
+Pramod Boda
+Pramod Boda
+Posted on Feb 21, 2025 • Edited on Apr 5, 2025
+
+
+
+216
+
+
+6
+
+
+5
+
+
+5
+
+
+5
+Recommended Folder Structure for React 2025
+#
+react
+#
+reactjsdevelopment
+#
+folderstructure
+#
+webdev
+For a React project in 2025, a well-organized folder structure is essential for maintainability, scalability, and ease of collaboration. The structure should be modular, flexible, and adaptable to different types of projects, whether you're building a small app or a large-scale enterprise application.
+
+Here’s an updated folder structure for modern React projects, keeping in mind best practices, scalability, and performance:
+
+1. Root Directory
+At the root of your project, you should have these typical files and directories:
+
+/my-app
+  ├── /public/
+  ├── /src/
+  ├── /assets/
+  ├── .gitignore
+  ├── package.json
+  ├── README.md
+  ├── tsconfig.json (for TypeScript projects)
+  ├── vite.config.js (for Vite projects)
+  └── .eslintrc.json (or .eslint.js)
+2. Folder Structure
+/public
+
+The public folder contains static files that are served directly to the browser, such as the index.html, images, and other assets.
+
+/public
+  ├── index.html
+  ├── favicon.ico
+  └── /images/
+/src
+
+The src folder is where all of your React application code resides. This is where you'll spend most of your time.
+
+/src
+  ├── /assets/           # Static assets (images, fonts, etc.)
+  ├── /components/       # Reusable components
+  ├── /features/         # Feature-specific logic and components (could be feature folders)
+  ├── /hooks/            # Custom React hooks
+  ├── /layouts/          # Layout components (e.g., Header, Footer, Sidebar)
+  ├── /pages/            # Page components (routes)
+  ├── /services/         # API requests, utilities, external service integrations
+  ├── /store/            # State management (Redux, Zustand, Context API)
+  ├── /styles/           # Global styles (CSS, SASS, Styled Components)
+  ├── /types/            # TypeScript types (if using TS)
+  ├── /utils/            # Utility functions, helpers, and constants
+  ├── /app.tsx           # App component (entry point)
+  ├── /index.tsx         # Main entry point for React
+  ├── /router.tsx        # Routing (React Router setup)
+  └── /config/           # Environment variables and configuration files
+3. Folder Details
+/assets:
+Store images, fonts, and other media assets here.
+It's optional to break this into subfolders (e.g., /images, /fonts).
+/components:
+
+Contains all reusable UI components that can be shared across different parts of your app.
+Example:
+
+/components
+  ├── Button.tsx
+  ├── Modal.tsx
+  └── Navbar.tsx
+/features:
+
+Organize your components, hooks, and logic by features (also called domain-based structure). This helps separate code based on functionality rather than by component type, promoting better scalability and maintainability.
+Example:
+
+/features
+  ├── /auth/           # Authentication-related components, hooks, reducers
+  ├── /dashboard/      # Dashboard components, hooks, etc.
+  └── /profile/        # Profile-related components
+/hooks:
+
+Store custom hooks that can be reused across your app, such as data fetching, form handling, etc.
+Example:
+
+/hooks
+  ├── useAuth.ts
+  ├── useFetch.ts
+  └── useForm.ts
+/layouts:
+
+Layout components like Header, Sidebar, Footer, etc., that are used across multiple pages.
+Example:
+
+/layouts
+  ├── MainLayout.tsx
+  ├── AdminLayout.tsx
+  └── DashboardLayout.tsx
+/pages:
+
+Contains page-level components (typically mapped to routes) that use the components from /features or /components.
+Example:
+
+/pages
+    ├── Auth/
+    │   └── SignInPage.tsx
+    │   └── SignUpPage.tsx
+  ├── Dashboard.tsx
+  ├── Home.tsx
+  ├── Users.tsx
+  ├── Prodcuts.tsx
+  └── ContactUs.tsx
+/services:
+
+Functions for API requests, integrating third-party services, or utilities that handle external communication.
+This could also be the place for service hooks or API-related logic.
+Example:
+
+/services
+  ├── authService.ts   # Authentication API
+  └── apiService.ts    # General API calls
+/store:
+
+If you’re using a state management solution like Redux, Zustand, or Context API, keep the logic and actions here.
+Example (if using Redux):
+
+/store
+  ├── /auth/          # Auth-related Redux slices
+  ├── /user/          # User-related Redux slices
+  └── store.ts        # Global store configuration
+/styles:
+
+Store global styles, theme files, or any CSS/SASS or CSS-in-JS styles here.
+Example:
+
+/styles
+  ├── index.css
+  ├── theme.ts        # For theme configuration in styled-components
+  └── global.scss     # Global styles for the app
+/types:
+
+If using TypeScript, store your custom types or interfaces here for easier management and reusability.
+Example:
+
+/types
+  ├── auth.d.ts       # Types for authentication-related data
+  ├── api.d.ts        # Types for API responses
+  └── user.d.ts       # Types for user objects
+/utils:
+
+General utility functions that are used across your app (e.g., date formatting, data validation, etc.).
+Example:
+
+/utils
+  ├── formatDate.ts
+  └── validateEmail.ts
+/config:
+
+Store environment variables or app configuration settings here, such as the API base URL, feature flags, etc.
+Example:
+
+/config
+  ├── index.ts        # Export environment variables and configurations
+  ├── config.ts       # Configuration file for app set
+Conclusion
+This folder structure provides a flexible, scalable, and maintainable setup for React applications in 2025. It focuses on:
+
+Modularity: Organizing by features or domains (vs. just by components).
+Reusability: Components, hooks, and utilities can be easily shared.
+Scalability: As your project grows, the structure allows for easy addition of new features or pages.
+Separation of Concerns: Each part of the app (state, services, components) has its own dedicated space.
+This structure works for both small projects and large-scale applications. You can always adjust the specifics depending on the complexity and requirements of your app.
+
+Enjoyed this post?
+Stay updated with the latest tech trends! Follow me on Instagram: @pramodboda.codevik and @pramodboda.art.
+let me know your thoughts! 👇
+
+profile
+MongoDB
+Promoted
+
+MongoDB Atlas image
+
+Scale your AI apps to 125+ cloud regions.
+Atlas handles the sharding, backups, and failover while you focus on shipping features. Get a flexible document model and integrated vector search on any cloud provider. Create your free cluster now.
+
+Start Free
+
+Read More
+Top comments (19)
+Subscribe
+pic
+Add to the discussion
+ 
+ 
+himanshu_code profile image
+Himanshu Sorathiya
+•
+Feb 21 '25
+
+How can this be 100% same like mine, I also prefer this same layout, one thing diff is that I prefer store related slices in their own feature related folder, like authSlice will go in Auth folder.
+Great and best folder structure you'll ever see which lists out all aspects with proper example
+
+
+9
+ likes
+Like
+
+Reply
+ 
+ 
+pramod_boda profile image
+Pramod Boda 
+•
+Feb 21 '25
+
+Thank you for your feedback! I completely agree with organizing slices into their feature-related folders—it’s a great approach for maintaining scalability and readability. The structure I shared is just one way to do it, and your method of placing authSlice in an Auth folder makes a lot of sense, especially for larger projects. It’s all about finding what works best for the team and the project’s needs. Thanks for sharing your perspective!
+
+
+4
+ likes
+Like
+
+Reply
+ 
+ 
+agws profile image
+And Go Web Solutions | AGWS
+•
+Feb 22 '25
+
+Yes this is a great project structure i used a similar one a couple of times , i would just mention that the context api in the comment is not a a state management like redux ,Context is a form of Dependency Injection that you can handle its state using useReducer, ive tested it out myself and as your project gets bigger its gets worse to handle state management it gets very slow.
+
+
+2
+ likes
+Like
+
+Reply
+ 
+ 
+jack_hurry_05395429b71e88 profile image
+Jack Hurry
+•
+Feb 22 '25
+
+A well-structured React project ensures better maintainability and scalability! The feature-based approach is a great way to keep things modular. If you're managing workplace applications, having a secure access system is just as important. Check out Online health management for more insights on optimizing secure access and user management. 🚀
+
+
+2
+ likes
+Like
+
+Reply
+ 
+ 
+hombre2014 profile image
+Yuriy Chamkoriyski
+•
+Mar 20 '25
+
+OK, I have a question about tests folder? Where is it? I have heard that there are two main concepts about it - put all the test files in test or __test__ folder or just have all the .test files src collocated in the folder. Any comments about that?
+
+
+3
+ likes
+Like
+
+Reply
+ 
+ 
+nqhed profile image
+Huy Edward Nguyen
+•
+Mar 2 '25
+
+The article is very good, the project structure is very simple and easy to maintain.
+
+
+1
+ like
+Like
+
+Reply
+ 
+ 
+pramod_boda profile image
+Pramod Boda 
+•
+Mar 5 '25
+
+Thank you 😊
+
+
+1
+ like
+Like
+
+Reply
+ 
+ 
+bademiya_sk_7879589c1129a profile image
+Bademiya Sk
+•
+Apr 28 '25
+
+Thank you so much for sharing this kind of knowledge it is very easy to understand and use....
+
+
+2
+ likes
+Like
+
+Reply
+ 
+ 
+llxd profile image
+Lucas Lima do Nascimento
+•
+Mar 18 '25
+
+Hey @pramod_boda! Awesome article!
+
+I'm currently working on an open-source project to help people organize and structure their React apps! I'd love for you to take a look and share insights -- or even contribute to it with your structure, if you're feeling into it!
+
+Rorg - React Organizer
+
+
+2
+ likes
+Like
+
+Reply
+ 
+ 
+michaelandish profile image
+Michael
+•
+Mar 19 '25
+
+The folder structure is neat and clean, thank you! I'm particularly interested in how feature-nested folders will be organized. Are they designed to be independent modules? Also, how will we configure ESLint to prevent unintended feature dependencies?
+
+I found this video [dly.to/9XmRt2U39uO] helpful and thought you might too.
+
+By the way, here's the squad you can join [app.daily.dev/squads/weprodev].
+
+Thanks for sharing!
+
+
+1
+ like
+Like
+
+Reply
+ 
+ 
+lord007tn profile image
+Raed Bahri
+•
+Mar 23 '25
+
+tbh a module based or feature based structure should be extended to support more the scalability and the organization
+you can supercharge it with a eslint rule where you can import from feature to feature for better isolation
+mention to people that every folder outside the feature can be repeated under the feature
+
+
+1
+ like
+Like
+
+Reply
+ 
+ 
+kleninb profile image
+Prathap Karumanchi
+•
+Mar 23 '25
+
+ChatGTP suggested this structure.
+
+/my-react-app
+│── 📂 src
+│ ├── 📂 app
+│ │ ├── 📂 routes # All application routes
+│ │ ├── 📂 layout # Layout components (Header, Footer, etc.)
+│ │ ├── 📂 hooks # Custom hooks
+│ │ ├── 📂 providers # Context API Providers
+│ │ ├── 📂 services # API calls (GraphQL/REST)
+│ │ ├── 📂 store # Global state management (Redux, Zustand, Jotai, etc.)
+│ │ ├── 📂 types # Global TypeScript types
+│ │ ├── 📂 utils # Utility/helper functions
+│ │ ├── 📂 config # Configuration & environment setup
+│ ├── 📂 components
+│ │ ├── 📂 ui # Reusable UI components (buttons, modals, forms)
+│ │ ├── 📂 features # Feature-specific components
+│ │ ├── 📂 animations # Animation files (Framer Motion, GSAP)
+│ ├── 📂 modules
+│ │ ├── 📂 auth # Authentication logic
+│ │ ├── 📂 dashboard # Dashboard-related logic
+│ │ ├── 📂 profile # User profile logic
+│ ├── 📂 assets # Static assets (images, fonts, icons)
+│ ├── 📂 styles # Global styles (Tailwind, SCSS, CSS Modules)
+│ ├── 📂 tests # Unit & integration tests (Jest, React Testing Library)
+│ ├── 📂 mocks # Mock data for tests
+│ ├── main.tsx # Application entry point
+│ ├── App.tsx # Main App component
+│ ├── router.tsx # React Router setup
+│── 📂 public # Static files (favicon, index.html)
+│── .env # Environment variables
+│── tsconfig.json # TypeScript configuration
+│── package.json # Dependencies and scripts
+│── README.md # Documentation
+
+
+1
+ like
+Like
+
+Reply
+ 
+ 
+jason_perry_e949878aa5725 profile image
+Jason Perry
+•
+Mar 24 '25
+
+Remove the two testing-related folders (tests and mocks) and that's no different than what OP is suggesting. The app folder isn't necessary, since that's what 'src' is and 'features' has simply been renamed 'modules' here... Personally, I prefer 'features' and that's usually what I see this folder named.
+
+
+1
+ like
+Like
+
+Reply
+View full discussion (19 comments)
+Some comments may only be visible to logged-in visitors. Sign in to view all comments.
+
+Code of Conduct • Report abuse
+profile
+MongoDB
+Promoted
+
+MongoDB Atlas image
+
+Build fast on MongoDB Atlas without the fear of outgrowing.
+Don't let your database dictate your speed. With MongoDB Atlas, the same document model you use for your MVP handles global scale across AWS, Azure, and Google Cloud. Start free and stay fast as you grow.
+
+Start Free
+
+
+Pramod Boda
+Follow
+https://instagram.com/pramodboda.art https://instagram.com/pramodboda.codevik
+Location
+Hyderabad, India
+Joined
+Dec 13, 2024
+More from Pramod Boda
+Recommended Folder Structure for Node(TS) 2025
+#webdev #programming #node #fullstack
+React Router vs. React Router DOM: Key Differences Explained
+#react #webdev #javascript #programming
+profile
+MongoDB
+Promoted
+
+MongoDB Atlas image
+
+3 reasons why developers scale faster on MongoDB Atlas.
+A flexible schema, integrated search, and automated global distribution so you can innovate and innovate with speed and agility. Build gen AI apps that run anywhere and scale everywhere.
+
+Start Free
+
+/src
+  ├── /assets/           # Static assets (images, fonts, etc.)
+  ├── /components/       # Reusable components
+  ├── /features/         # Feature-specific logic and components (could be feature folders)
+  ├── /hooks/            # Custom React hooks
+  ├── /layouts/          # Layout components (e.g., Header, Footer, Sidebar)
+  ├── /pages/            # Page components (routes)
+  ├── /services/         # API requests, utilities, external service integrations
+  ├── /store/            # State management (Redux, Zustand, Context API)
+  ├── /styles/           # Global styles (CSS, SASS, Styled Components)
+  ├── /types/            # TypeScript types (if using TS)
+  ├── /utils/            # Utility functions, helpers, and constants
+  ├── /app.tsx           # App component (entry point)
+  ├── /index.tsx         # Main entry point for React
+  ├── /router.tsx        # Routing (React Router setup)
+  └── /config/           # Environment variables and configuration files
+💎 DEV Diamond Sponsors
+
+Thank you to our Diamond Sponsors for supporting the DEV Community
+
+Google AI - Official AI Model and Platform Partner
+Google AI is the official AI Model and Platform Partner of DEV
+
+Neon - Official Database Partner
+Neon is the official database partner of DEV
+
+Algolia - Official Search Partner
+Algolia is the official search partner of DEV
+
+DEV Community — A space to discuss and keep up software development and manage your software career
+
+Home
+DEV++
+Reading List
+Videos
+DEV Education Tracks
+DEV Challenges
+DEV Help
+Advertise on DEV
+Organization Accounts
+DEV Showcase
+About
+Contact
+Free Postgres Database
+DEV Shop
+MLH
+Code of Conduct
+Privacy Policy
+Terms of Use
+Built on Forem — the open source software that powers DEV and other inclusive communities.
+
+Made with love and Ruby on Rails. DEV Community © 2016 - 2026.`}</code></pre></p>
+
       <h1>How do you handle role-based UI?</h1>
       <p>I handle role-based UI by storing the user role (from auth) and conditionally rendering components, routes, and actions based on permissions.</p>
       <p>I implement role-based UI by storing the user's role or permissions and conditionally rendering components, routes, and actions. I prefer a permission-based approach for flexibility, and I centralize role logic using hooks or config files. I also ensure backend validation for security.</p>
