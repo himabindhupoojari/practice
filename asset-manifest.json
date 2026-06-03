@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/practice/static/css/main.714aa508.css",
-    "main.js": "/practice/static/js/main.7dd261fc.js",
+    "main.css": "/practice/static/css/main.28a690d1.css",
+    "main.js": "/practice/static/js/main.bfbbbf20.js",
     "static/js/453.07b51e5c.chunk.js": "/practice/static/js/453.07b51e5c.chunk.js",
     "static/media/weatherbg.jpg": "/practice/static/media/weatherbg.b69bbd24b2b161a19981.jpg",
     "static/media/react-fiber-archetecture.jpeg": "/practice/static/media/react-fiber-archetecture.54a65c49399c25ea8088.jpeg",
     "static/media/unnecessary-renders.jpeg": "/practice/static/media/unnecessary-renders.40932cd0fc63c5431568.jpeg",
     "static/media/usecallback-rule.jpeg": "/practice/static/media/usecallback-rule.9b7ae96cfe2094937563.jpeg",
     "index.html": "/practice/index.html",
-    "main.714aa508.css.map": "/practice/static/css/main.714aa508.css.map",
-    "main.7dd261fc.js.map": "/practice/static/js/main.7dd261fc.js.map",
+    "main.28a690d1.css.map": "/practice/static/css/main.28a690d1.css.map",
+    "main.bfbbbf20.js.map": "/practice/static/js/main.bfbbbf20.js.map",
     "453.07b51e5c.chunk.js.map": "/practice/static/js/453.07b51e5c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.714aa508.css",
-    "static/js/main.7dd261fc.js"
+    "static/css/main.28a690d1.css",
+    "static/js/main.bfbbbf20.js"
   ]
 }
