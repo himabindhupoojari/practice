@@ -330,7 +330,7 @@ getData();
             <h1>4. Explain me the var let and const.</h1>
             <h3>🔥 Key Differences (Interview Table)</h3>
             <pre>
-              <code>{`| Feature   | var           | let     | const     |
+                <code>{`| Feature   | var           | let     | const     |
 | --------- | --------------- | --------- | ----------- |
 | Scope     | Function        | Block     | Block       |
 | Hoisting  | Yes (undefined) | Yes (TDZ) | Yes (TDZ)   |
@@ -339,6 +339,50 @@ getData();
 | Use Today | ❌ Avoid         | ✅ Yes     | ✅ Preferred |
 `}</code>
             </pre>
+
+            <h1>5.How the recursive function works?</h1>
+            <p><pre><code>{`function simpleArraySum(ar, i = 0) {
+    if (i >= ar.length) {
+        return 0;
+    }
+
+    return ar[i] + simpleArraySum(ar, i + 1);
+}
+output: 6`}</code></pre></p>
+
+            <p>
+                <pre><code>{`simpleArraySum([1,2,3],0)
+= 1 + simpleArraySum([1,2,3],1)
+      = 2 + simpleArraySum([1,2,3],2)
+            = 3 + simpleArraySum([1,2,3],3)
+                  = 0
+
+= 1 + (2 + (3 + 0))
+= 6`}</code></pre>
+            </p>
+
+            <p><strong>1. Base Condition</strong>
+                <pre><code>{`if (i >= ar.length) {
+    return 0;
+}`}</code></pre>
+                “The base condition stops recursion when the index reaches the array length.”</p>
+
+            <p><strong>2. Recursive Step</strong></p>
+            <p>
+                <pre><code>{`return ar[i] + simpleArraySum(ar, i + 1);`}</code></pre>
+                “The recursive step adds the current element to the sum returned by the next recursive call.”
+            </p>
+
+            <p><strong>3. Recursive Flow</strong></p>
+            <p>“The function keeps moving forward until the base condition is met, then the call stack resolves backward and calculates the final sum.”</p>
+            <p><strong>Short Interview-Friendly Version</strong></p>
+            <p>“This line combines the current array value with the recursive result of the remaining array elements.”</p>
+            <p><strong>If Interviewer Asks “Why Does It Work?”</strong></p>
+            <p>“Because each recursive call waits for the next call to complete. Once the base case returns 0, the stack starts resolving backward by adding each stored array value.”</p>
+            <p><strong>Call 3 becomes:</strong> 3+0 = 3</p>
+            <p><strong>Call 2 becomes:</strong> 2+3 = 5</p>
+            <p><strong>Call 1 becomes:</strong> 1+5 = 6</p>
+            <p><strong>Final Output</strong>6</p>
         </div>
     );
 }

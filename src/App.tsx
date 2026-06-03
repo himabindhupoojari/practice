@@ -22,6 +22,8 @@ import JsQs from "./InterviewPanel/JsQs";
 import ReactCoreQuestions from "./InterviewPanel/ReactCoreQuestions";
 import ReactAdvanced from "./InterviewPanel/ReactAdvanced";
 import TypescriptReact from "./InterviewPanel/TypescriptReact";
+import Practice from "./InterviewPanel/Practice";
+import Theory from "./InterviewPanel/Theory";
 
 
 function App() {
@@ -47,6 +49,8 @@ function App() {
         <Link to="core-react">Core React</Link>
         <Link to="advanced-react">Advanced React</Link>
         <Link to="typescript">Typescript</Link>
+        <Link to="practice">Practice</Link>
+        <Link to="theory">Theory</Link>
       </div>
       <Routes>
         {/* <Route path="/" element={<Component1 />} /> */}
@@ -70,6 +74,8 @@ function App() {
         <Route path="core-react" element={<ReactCoreQuestions />}/>
         <Route path="advanced-react" element={<ReactAdvanced />}/>
         <Route path="typescript" element={<TypescriptReact />}/>
+        <Route path="practice" element={<Practice />}/>
+        <Route path="theory" element={<Theory />}/>
       </Routes>
     </HashRouter>
   );
